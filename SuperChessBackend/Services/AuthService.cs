@@ -1,0 +1,167 @@
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.DataProtection;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using Serilog;
+using SuperChessBackend.Configuration;
+using SuperChessBackend.DB;
+using SuperChessBackend.DB.Repositories;
+using SuperChessBackend.DTOs;
+using System.Data;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+using BC = BCrypt.Net.BCrypt;
+
+namespace SuperChessBackend.Services
+{
+    public interface IAuthService
+    {
+        Task<UserTokensDTO> SignIn(UserSignInRequestDTO loginReq);
+        Task<UserTokensDTO> SignUp(UserSignUpRequestDTO signinReq);
+        Task<UserTokensDTO> RefreshToken(RefreshTokenRequstDTO refreshToken);
+        Task Logout();
+    }
+
+    public class AuthService : IAuthService
+    {
+        private readonly IAppUnitOfWork uow;
+        private readonly IHttpContextAccessor httpContextAccessor;
+
+        public AuthService(IAppUnitOfWork uow, IHttpContextAccessor httpContextAccessor)
+        {
+            this.uow = uow;
+            this.httpContextAccessor = httpContextAccessor;
+        }
+
+        public async Task<UserTokensDTO> CreateTokens(User user, string oldRefreshToken = null)
+        {
+            List<Claim> claims = new List<Claim>
+            {
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()), /// for logout (revoke token)
+                new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
+                new Claim(ClaimTypes.Name, user.UserName),
+            };
+            if(user.Roles != null)
+            {
+                foreach(var role in user.Roles)
+                {
+                    claims.Add(new Claim(ClaimTypes.Role, role.RoleName));
+                }
+            }
+            var key = Encoding.UTF8.GetBytes(JWTConfig.Key);
+            var signingCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature);
+
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(claims),
+                Issuer = JWTConfig.Issuer,
+                Audience = JWTConfig.Audience,
+                Expires = DateTime.UtcNow.AddMinutes(JWTConfig.LifetimeInMinutes),
+                SigningCredentials = signingCredentials,
+            };
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+
+
+            var newRefreshToken = await uow.RefreshTokenRepository.GenerateNewAndRemoveOld(user, oldRefreshToken);
+            return new UserTokensDTO()
+            {
+                Token = tokenHandler.WriteToken(token),
+                TokenExpiration = token.ValidTo,
+                RefreshToken = newRefreshToken.Token,
+                RefreshTokenExpiration = newRefreshToken.ExpirationDate,
+            };
+        }
+        public async Task<UserTokensDTO> SignIn(UserSignInRequestDTO loginReq)
+        {
+            var user = await uow.UserRepository.GetByUserName(loginReq.UserName,
+                                        a => a.Include(x => x.UserPasswords)
+                                              .Include(x => x.Roles));
+            if(user == null)
+            {
+                throw ServiceUtils.BadRequest();
+            }
+            var password = uow.UserRepository.GetCurrentUserPassword(user);
+            var isCorrectPass = password != null && BC.Verify(loginReq.Password, password.PasswordHash);
+
+            if(!isCorrectPass)
+            {
+                throw ServiceUtils.BadRequest();
+            }
+
+            var result = await CreateTokens(user);
+            await uow.SaveChangesAsync(); 
+
+            return result;
+        }
+
+        public async Task<UserTokensDTO> SignUp(UserSignUpRequestDTO signinReq)
+        {
+            var userExists = await uow.UserRepository.GetByUserName(signinReq.UserName) != null;
+            /// TODO you can check if email exists in one db query
+            if(userExists)
+            {
+                throw ServiceUtils.BadRequest("User with that name already exists :(");
+            }
+            var user = new User()
+            {
+                CreationDate = DateTime.UtcNow,
+                UserEmail = signinReq.Email,
+                UserName = signinReq.UserName,
+                UserPasswords = new List<UserPassword>()
+                {
+                    new UserPassword()
+                    {
+                        PasswordDate = DateTime.UtcNow,
+                        PasswordHash = BC.HashPassword(signinReq.Password),
+                    }
+                }
+            };
+            await uow.UserRepository.Create(user);
+            await uow.SaveChangesAsync();
+
+            var result = await CreateTokens(user);
+            await uow.SaveChangesAsync();
+
+            return result;
+        }
+        public async Task Logout()
+        {
+            var userIdStr = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var userId = int.Parse(userIdStr);
+            var tokenGuid = httpContextAccessor.HttpContext.User.FindFirst(JwtRegisteredClaimNames.Jti).Value;
+            var user = await uow.UserRepository.GetById(userId);
+            if(user != null)
+            {
+                throw ServiceUtils.BadRequest();
+            }
+            user.RevokedTokens.Add(new RevokedToken()
+            {
+                TokenGuid = tokenGuid,
+                // in order to know when we can remove it from db. Its a little bit longer than real token lifetime
+                ExpirationDate = DateTime.UtcNow.AddMinutes(JWTConfig.LifetimeInMinutes),
+            });
+            await uow.SaveChangesAsync();
+        }
+
+        public async Task<UserTokensDTO> RefreshToken(RefreshTokenRequstDTO refreshToken)
+        {
+            /// TODO sprawdzic czy ma dsotep do tych claimow
+            var userIdStr = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var userId = int.Parse(userIdStr);
+            var user = await uow.UserRepository.GetById(userId, a=>a.Include(x=>x.RefreshTokens));
+            if(user != null)
+            {
+                throw ServiceUtils.BadRequest();
+            }
+            if(!user.RefreshTokens.Any(a => a.Token == refreshToken.RefreshToken))
+            {
+                throw ServiceUtils.BadRequest("Refresh token is invalid or already expired");
+            }
+            var result = await CreateTokens(user, refreshToken.RefreshToken);
+            await uow.SaveChangesAsync();
+            return result;
+        }
+    }
+}

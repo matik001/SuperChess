@@ -14,7 +14,7 @@ jobs:
       - restore_cache:
           name: Restore pnpm Package Cache
           keys:
-            - pnpm-packages-{{ checksum "pnpm-lock.yaml" }}
+            - pnpm-packages-{{ checksum "SuperChessFrontend/pnpm-lock.yaml" }}
       - run:
           name: Install pnpm package manager
           command: |
@@ -23,18 +23,20 @@ jobs:
       - run:
           name: Install Dependencies
           command: |
+            cd SuperChessFrontend
             pnpm install
       - save_cache:
           name: Save pnpm Package Cache
-          key: pnpm-packages-{{ checksum "pnpm-lock.yaml" }}
+          key: pnpm-packages-{{ checksum "SuperChessFrontend/pnpm-lock.yaml" }}
           paths:
             - node_modules
       - run:
           name: Build react
           command: |
+            cd SuperChessFrontend
             pnpm build
       - persist_to_workspace:
-          root: dist
+          root: SuperChessFrontend/dist
           paths:
             - frontend_build
 
@@ -46,23 +48,30 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - dotnet-packages-v1-{{ checksum "SuperChessBackend.csproj" }}
+            - dotnet-packages-v1-{{ checksum "SuperChessBackend/SuperChessBackend.csproj" }}
       - run:
           name: "Install project dependencies"
-          command: dotnet.exe restore
+          command: |
+            cd SuperChessBackend
+            dotnet.exe restore
       - run:
           name: "Build Application according to some given configuration"
-          command: dotnet.exe build --configuration Release
+          command: |
+            cd SuperChessBackend
+            dotnet.exe build --configuration Release
       - run:
           name: "Publish to a subfolder"
           command: |
+            cd SuperChessBackend
             dotnet.exe publish --configuration Release --output Build
       - run:
           name: "Add appsettings.json"
-          command: echo $appsettings > Build/appsettings.json
+          command: |
+            cd SuperChessBackend
+            echo $appsettings > Build/appsettings.json
 
       - persist_to_workspace:
-          root: Build
+          root: SuperChessBackend/Build
           paths:
             - backend_build
       

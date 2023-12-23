@@ -10,9 +10,6 @@ jobs:
       - image: cimg/node:21.4.0
     steps:
       - checkout
-      - run:
-          name: Install pnpm
-          command: sudo npm install -g pnpm
       - restore_cache:
           name: Restore pnpm Package Cache
           keys:
@@ -22,7 +19,7 @@ jobs:
           command: |
             cd SuperChessFrontend
             corepack enable
-            corepack prepare pnpm@latest-8 --activate
+            sudo corepack prepare pnpm@latest-8 --activate
       - run:
           name: Install Dependencies
           command: |

@@ -34,7 +34,7 @@ jobs:
           command: |
             pnpm build
       - persist_to_workspace:
-          root: build
+          root: dist
           paths:
             - frontend_build
 
@@ -57,8 +57,12 @@ jobs:
           name: "Publish to a subfolder"
           command: |
             dotnet.exe publish --configuration Release --output Build
+      - run:
+          name: "Add appsettings.json"
+          command: echo $appsettings > Build/appsettings.json
+
       - persist_to_workspace:
-          root: bin/Release/net8.0
+          root: Build
           paths:
             - backend_build
       
@@ -84,11 +88,11 @@ jobs:
           command: rsync -e "ssh -o StrictHostKeyChecking=no" -arvc --delete ./backend_build $VPS_USER@$VPS_URL:~/containers/chess_backend
 
       # Start backend
-      - run: > 
-          ssh -o StrictHostKeyChecking=no $VPS_USER@$VPS_URL "
-            export DB_CONNECTION_STRING=$DB_CONNECTION_STRING ; 
-            cd ./containers/chess_backend ;
-            docker compose -f docker-compose.prod.yaml up --build -d"
+      # - run: > 
+      #     ssh -o StrictHostKeyChecking=no $VPS_USER@$VPS_URL "
+      #       export DB_CONNECTION_STRING=$DB_CONNECTION_STRING ; 
+      #       cd ./containers/chess_backend ;
+      #       docker compose -f docker-compose.prod.yaml up --build -d"
       
 
       # copies files from pipeline to vps via ssh

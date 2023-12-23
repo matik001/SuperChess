@@ -31,3 +31,9 @@ appAxios.interceptors.response.use(
 		return Promise.reject(error);
 	}
 );
+
+export interface BackendError {
+	StatusCode: number;
+	Message: string;
+	StackTrace?: string;
+}

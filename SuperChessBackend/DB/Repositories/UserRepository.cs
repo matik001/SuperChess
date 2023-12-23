@@ -11,10 +11,9 @@ namespace SuperChessBackend.DB.Repositories
     [Table("user")]
     public class User : IEntity
     {
-        [NotMapped]
-        public int Id { get => UserId; }
         [Key]
-        public int UserId { get; set; }
+        [Column("UserId")]
+        public int Id { get; set; }
         public string UserName { get; set; }
         public string UserEmail { get; set; }
         public DateTime CreationDate { get; set; }

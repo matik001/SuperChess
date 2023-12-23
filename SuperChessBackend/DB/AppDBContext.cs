@@ -58,11 +58,19 @@ namespace SuperChessBackend.DB
             builder.Entity<User>()
                 .HasMany(e => e.Roles)
                 .WithMany(e => e.Users)
-                .UsingEntity<UserRole>(
-                    l => l.HasOne<Role>().WithMany(e => e.UserRoles).HasForeignKey(e => e.RoleId),
-                    r => r.HasOne<User>().WithMany(e => e.UserRoles).HasForeignKey(e => e.UserId)
-                );
-
+                //.UsingEntity<UserRole>(
+                //    l => l.HasOne<Role>().WithMany(e => e.UserRoles).HasForeignKey(e => e.RoleId),
+                //    r => r.HasOne<User>().WithMany(e => e.UserRoles).HasForeignKey(e => e.UserId)
+                //)
+                ;
+            builder.Entity<User>()
+              .HasMany(e => e.Games)
+              .WithMany(e => e.Users)
+              //.UsingEntity<UserGame>(
+              //    l => l.HasOne<Game>().WithMany(e => e.UserGame).HasForeignKey(e => e.GameId),
+              //    r => r.HasOne<User>().WithMany(e => e.UserGame).HasForeignKey(e => e.UserId)
+              //)
+              ;
             builder.Entity<User>()
                 .HasMany(e => e.UserPasswords)
                 .WithOne(e => e.User);
@@ -76,13 +84,7 @@ namespace SuperChessBackend.DB
                 .WithOne(e => e.User);
 
 
-            builder.Entity<User>()
-              .HasMany(e => e.Games)
-              .WithMany(e => e.Users)
-              .UsingEntity<UserGame>(
-                  l => l.HasOne<Game>().WithMany(e => e.UserGame).HasForeignKey(e => e.GameId),
-                  r => r.HasOne<User>().WithMany(e => e.UserGame).HasForeignKey(e => e.UserId)
-              );
+            
 
 
             /////

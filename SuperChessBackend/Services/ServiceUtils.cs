@@ -20,5 +20,6 @@ namespace SuperChessBackend.Services
                 Message = message
             });
         }
+
     }
 }

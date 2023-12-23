@@ -10,10 +10,9 @@ namespace SuperChessBackend.DB.Repositories
     [Table("userrole")]
     public class UserRole : IEntity
     {
-        [NotMapped]
-        public int Id { get => UserRoleId; }
         [Key]
-        public int UserRoleId { get; set; }
+        [Column("UserRoleId")]
+        public int Id { get; set; }
 
         [ForeignKey("User")]
         public int UserId { get; set; }

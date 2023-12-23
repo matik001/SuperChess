@@ -11,10 +11,9 @@ namespace SuperChessBackend.DB.Repositories
     [Table("revokedtokens")]
     public class RevokedToken : IEntity
     {
-        [NotMapped]
-        public int Id { get => RevokedTokenId; }
         [Key]
-        public int RevokedTokenId { get; set; }
+        [Column("RevokedTokenId")]
+        public int Id { get; set; }
         public string TokenGuid { get; set; }
         public DateTime ExpirationDate { get; set; }
 

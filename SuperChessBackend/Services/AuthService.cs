@@ -39,7 +39,7 @@ namespace SuperChessBackend.Services
             List<Claim> claims = new List<Claim>
             {
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()), /// for logout (revoke token)
-                new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimTypes.Name, user.UserName),
             };
             if(user.Roles != null)
@@ -80,14 +80,14 @@ namespace SuperChessBackend.Services
                                               .Include(x => x.Roles));
             if(user == null)
             {
-                throw ServiceUtils.BadRequest();
+                throw ServiceUtils.BadRequest("Bad email or password");
             }
             var password = uow.UserRepository.GetCurrentUserPassword(user);
             var isCorrectPass = password != null && BC.Verify(loginReq.Password, password.PasswordHash);
 
             if(!isCorrectPass)
             {
-                throw ServiceUtils.BadRequest();
+                throw ServiceUtils.BadRequest("Bad email or password");
             }
 
             var result = await CreateTokens(user);
@@ -131,8 +131,8 @@ namespace SuperChessBackend.Services
             var userIdStr = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var userId = int.Parse(userIdStr);
             var tokenGuid = httpContextAccessor.HttpContext.User.FindFirst(JwtRegisteredClaimNames.Jti).Value;
-            var user = await uow.UserRepository.GetById(userId);
-            if(user != null)
+            var user = await uow.UserRepository.GetById(userId, a=>a.Include(x=>x.RevokedTokens));
+            if(user == null)
             {
                 throw ServiceUtils.BadRequest();
             }
@@ -142,16 +142,39 @@ namespace SuperChessBackend.Services
                 // in order to know when we can remove it from db. Its a little bit longer than real token lifetime
                 ExpirationDate = DateTime.UtcNow.AddMinutes(JWTConfig.LifetimeInMinutes),
             });
+            if(user.RevokedTokens.Count > 10)
+            {
+                /// todo sprawdzic czy sie usuwa z bazy
+                user.RevokedTokens.Remove(user.RevokedTokens.OrderBy(a => a.ExpirationDate).FirstOrDefault());
+            }
             await uow.SaveChangesAsync();
         }
+        private ClaimsPrincipal? _getPrincipalFromExpiredToken(string? token)
+        {
+            var tokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateAudience = false,
+                ValidateIssuer = false,
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(JWTConfig.Key)),
+                ValidateLifetime = false
+            };
 
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out SecurityToken securityToken);
+            if(securityToken is not JwtSecurityToken jwtSecurityToken || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
+                throw new SecurityTokenException("Invalid token");
+
+            return principal;
+
+        }
         public async Task<UserTokensDTO> RefreshToken(RefreshTokenRequstDTO refreshToken)
         {
-            /// TODO sprawdzic czy ma dsotep do tych claimow
-            var userIdStr = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var principal = _getPrincipalFromExpiredToken(refreshToken.Token);
+            var userIdStr = principal.FindFirst(ClaimTypes.NameIdentifier).Value;
             var userId = int.Parse(userIdStr);
             var user = await uow.UserRepository.GetById(userId, a=>a.Include(x=>x.RefreshTokens));
-            if(user != null)
+            if(user == null)
             {
                 throw ServiceUtils.BadRequest();
             }

@@ -47,6 +47,7 @@ namespace SuperChessBackend.Controllers.v1
             return await service.SignUp(userDto);
         }
 
+        [Authorize]
         [HttpPost("logout")]
         public async Task Logout()
         {

@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SuperChessBackend.DB;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -7,6 +9,8 @@ namespace SuperChessBackend.Controllers.v1
 {
     [Route("api/v1/[controller]")]
     [ApiController]
+    /// niepotrzebne, doda sie automatycznie
+    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)] 
     public class GameController : ControllerBase
     {
         private readonly IAppUnitOfWork uow;

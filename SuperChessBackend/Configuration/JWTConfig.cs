@@ -29,7 +29,12 @@ namespace SuperChessBackend.Configuration
             Key = section.GetValue<string>("Key") ?? "";
             LifetimeInMinutes = section.GetValue<int>("LifetimeInMinutes");
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            services.AddAuthentication(opt =>
+            {
+                opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                opt.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
                 .AddJwtBearer(options => {
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
@@ -49,7 +54,7 @@ namespace SuperChessBackend.Configuration
             services.AddAuthorization(options => {
                 
                 /// Users must be authenticated to access any endpoint
-                options.FallbackPolicy = new AuthorizationPolicyBuilder() 
+                options.DefaultPolicy = new AuthorizationPolicyBuilder(options.DefaultPolicy) 
                      .RequireAuthenticatedUser()
                      .Build();
 

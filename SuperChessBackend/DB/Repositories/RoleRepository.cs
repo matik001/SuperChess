@@ -10,10 +10,9 @@ namespace SuperChessBackend.DB.Repositories
     [Table("role")]
     public class Role : IEntity
     {
-        [NotMapped]
-        public int Id { get => RoleId; }
         [Key]
-        public int RoleId { get; set; }
+        [Column("RoleId")]
+        public int Id { get; set; }
         public string RoleName { get; set; }
 
         public virtual ICollection<UserRole> UserRoles { get; set; }
@@ -52,8 +51,8 @@ namespace SuperChessBackend.DB.Repositories
         public static void Seed(EntityTypeBuilder<Role> builder)
         {
             builder.HasData(
-                new Role() { RoleId = (int)RolesEnum.Admin, RoleName = "Admin" },
-                new Role() { RoleId = (int)RolesEnum.Blocked, RoleName = "Blocked" }
+                new Role() { Id = (int)RolesEnum.Admin, RoleName = "Admin" },
+                new Role() { Id = (int)RolesEnum.Blocked, RoleName = "Blocked" }
             );
         }
     }

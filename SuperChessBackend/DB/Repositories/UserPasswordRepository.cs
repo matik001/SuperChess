@@ -6,10 +6,9 @@ namespace SuperChessBackend.DB.Repositories
     [Table("userpassword")]
     public class UserPassword : IEntity
     {
-        [NotMapped]
-        public int Id { get => PasswordId; }
         [Key]
-        public int PasswordId { get; set; }
+        [Column("PasswordId")]
+        public int Id { get; set; }
         public string PasswordHash { get; set; }
         public DateTime PasswordDate { get; set; }
 

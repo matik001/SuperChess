@@ -12,10 +12,9 @@ namespace SuperChessBackend.DB.Repositories
     [Table("refreshtoken")]
     public class RefreshToken : IEntity
     {
-        [NotMapped]
-        public int Id { get => RefreshTokenId; }
         [Key]
-        public int RefreshTokenId { get; set; }
+        [Column("RefreshTokenId")]
+        public int Id { get; set; }
         public string Token { get; set; }
         public DateTime CreationDate { get; set; }
         public DateTime ExpirationDate { get; set; }
@@ -47,7 +46,7 @@ namespace SuperChessBackend.DB.Repositories
                     Token = token,
                     CreationDate = DateTime.UtcNow,
                     ExpirationDate = DateTime.UtcNow.AddDays(7),
-                    UserId = user.UserId
+                    UserId = user.Id
                 };
                 await Create(refreshToken);
                 return refreshToken;

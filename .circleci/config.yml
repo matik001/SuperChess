@@ -1,0 +1,110 @@
+version: 2.1
+
+orbs:
+  windows: circleci/windows@2.2.0
+
+jobs:
+  build-frontend:
+    description: Build frontend
+    docker:
+      - image: cimg/node:21.4.0
+    parallelism: 10
+    steps:
+      - checkout
+      - restore_cache:
+          name: Restore pnpm Package Cache
+          keys:
+            - pnpm-packages-{{ checksum "pnpm-lock.yaml" }}
+      - run:
+          name: Install pnpm package manager
+          command: |
+            corepack enable
+            corepack prepare pnpm@latest-8 --activate
+      - run:
+          name: Install Dependencies
+          command: |
+            pnpm install
+      - save_cache:
+          name: Save pnpm Package Cache
+          key: pnpm-packages-{{ checksum "pnpm-lock.yaml" }}
+          paths:
+            - node_modules
+      - run:
+          name: Build react
+          command: |
+            pnpm build
+      - persist_to_workspace:
+          root: build
+          paths:
+            - frontend_build
+
+  build-backend:
+    description: Build backend with Release configuration
+    executor:
+      name: windows/default
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - dotnet-packages-v1-{{ checksum "SuperChessBackend.csproj" }}
+      - run:
+          name: "Install project dependencies"
+          command: dotnet.exe restore
+      - run:
+          name: "Build Application according to some given configuration"
+          command: dotnet.exe build --configuration Release
+      - run:
+          name: "Publish to a subfolder"
+          command: |
+            dotnet.exe publish --configuration Release --output Build
+      - persist_to_workspace:
+          root: bin/Release/net8.0
+          paths:
+            - backend_build
+      
+  deploy:
+    docker:
+      - image: cimg/node:21.4.0
+    steps:
+      - run: sudo apt update
+      - run: sudo apt-get install rsync
+      # adds ssh keys from circleci
+      - add_ssh_keys
+      - attach_workspace:
+          at: .
+
+      # Deploy frontend
+      - run:
+          name: Build react
+          command: rsync -e "ssh -o StrictHostKeyChecking=no" -arvc --delete ./frontend_build $VPS_USER@$VPS_URL:~/static/chess_frontend
+
+      # Send backend
+      - run:
+          name: Build react
+          command: rsync -e "ssh -o StrictHostKeyChecking=no" -arvc --delete ./backend_build $VPS_USER@$VPS_URL:~/containers/chess_backend
+
+      # Start backend
+      - run: > 
+          ssh -o StrictHostKeyChecking=no $VPS_USER@$VPS_URL "
+            export DB_CONNECTION_STRING=$DB_CONNECTION_STRING ; 
+            cd ./containers/chess_backend ;
+            docker compose -f docker-compose.prod.yaml up --build -d"
+      
+
+      # copies files from pipeline to vps via ssh
+      # - run: rsync -e "ssh -o StrictHostKeyChecking=no" -arvc --delete . $VPS_USER@$VPS_URL:~/containers/superchess
+      # - run: > 
+      #     ssh -o StrictHostKeyChecking=no $VPS_USER@$VPS_URL "
+      #       export PORT=5555 ; 
+      #       export DB_CONNECTION_STRING=$DB_CONNECTION_STRING ; 
+      #       cd ~/projects/url_shortener ;
+      #       docker compose -f docker-compose.prod.yaml up --build -d"
+workflows:  
+  build-and-deploy:
+    jobs:
+      - build-backend
+      - build-frontend
+      - deploy:
+          requires:
+            - build-backend
+            - build-frontend

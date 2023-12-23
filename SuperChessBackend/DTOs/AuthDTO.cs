@@ -36,6 +36,7 @@ namespace SuperChessBackend.DTOs {
 
     public class RefreshTokenRequstDTO
     {
+        public string Token { get; set; }
         public string RefreshToken { get; set; }
     }
 

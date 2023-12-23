@@ -32,36 +32,39 @@ namespace SuperChessBackend.DB.Repositories
     [Table("game")]
     public class Game : IEntity
     {
-        [NotMapped]
-        public int Id { get => GameId; }
         [Key]
-        public int GameId { get; set; }
+        [Column("GameId")]
+        public int Id { get; set; }
         public Guid GameGuid { get; set; }
         public DateTime CreationDate { get; set; }
         public GameState GameStatus { get; set; }
         public GameType GameType { get; set; }
 
         /// <summary>
+        ///  EF nie radzi sobie z JObject, więc musimy zrobić to ręcznie
+        /// </summary>
+        public string GameData { get; set; }
+
+        /// <summary>
         /// W zależności od typu gry, dane będą różne. W przypadku szachów jest to ChessData
         /// </summary>
-        public JObject GameData { get; set; }
-
         [NotMapped]
         private ChessData _chessData { get; set; } = null;
+
         [NotMapped]
-        public ChessData ChessData 
+        public ChessData ChessData  /// TODO sprawdzic czy prawidlowo dziala zapisywanie i aktualizacja tego pola
         {
             get
             {
                 if(_chessData == null)
                 {
-                    _chessData = GameData.ToObject<ChessData>();
+                    _chessData = JObject.Parse(GameData).ToObject<ChessData>();
                 }
                 return _chessData;
             }
             set
             {
-                GameData = JObject.FromObject(value);
+                GameData = JObject.FromObject(value).ToString();
                 _chessData = value; 
             }
         }

@@ -22,21 +22,22 @@ namespace SuperChessBackend.Configuration
                 throw new Exception("CORS section not found in appsettings.json");
             }
             AllowAll = section.GetValue<bool>("AllowAll");
-            AllowedOrigins = section.GetValue<string[]>("AllowedOrigins");
-
+            AllowedOrigins = section.GetSection("AllowedOrigins")
+                                    .AsEnumerable()
+                                    .Select(a=>a.Value)
+                                    .Where(a=>!string.IsNullOrEmpty(a))
+                                    .ToArray();
             services.AddCors(options =>
             {
                 options.AddPolicy(CORSPolicy.AllowAll,
                     p =>p.AllowAnyOrigin()
                          .AllowAnyMethod()
                          .AllowAnyHeader()
-                         .AllowCredentials()
                     );
 
                 options.AddPolicy(CORSPolicy.AllowSpecific,
                     p => p.WithOrigins(AllowedOrigins)
                           .AllowAnyMethod()
-                          .AllowCredentials()
                           .AllowAnyHeader()
                     );
             });

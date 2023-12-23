@@ -9,10 +9,9 @@ namespace SuperChessBackend.DB.Repositories
     [Table("gameuser")]
     public class UserGame: IEntity
     {
-        [NotMapped]
-        public int Id { get => UserGameId; }
         [Key]
-        public int UserGameId { get; set; }
+        [Column("UserGameId")]
+        public int Id { get; set; }
 
         public string Color { get; set; } /// may be something more than just "white" or "black"
 

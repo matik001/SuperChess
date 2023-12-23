@@ -55,11 +55,11 @@ jobs:
           command: |
             cd SuperChessBackend
             dotnet restore
-      # - save_cache:
-      #     name: Save nugets cache
-      #     key: dotnet-packages-v1-{{ checksum "SuperChessBackend/SuperChessBackend.csproj" }}
-      #     paths:
-      #       - C:\Users\circleci\.nuget\packages  TODO poprawic sciezke
+      - save_cache:
+          name: Save nugets cache
+          key: dotnet-packages-v1-{{ checksum "SuperChessBackend/SuperChessBackend.csproj" }}
+          paths:
+            - /root/.nuget/packages
       - run:
           name: "Build Application according to some given configuration"
           command: |

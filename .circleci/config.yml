@@ -12,7 +12,7 @@ jobs:
       - checkout
       - run:
           name: Install pnpm
-          command: npm install -g pnpm
+          command: sudo npm install -g pnpm
       - restore_cache:
           name: Restore pnpm Package Cache
           keys:

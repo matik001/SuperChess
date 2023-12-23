@@ -42,8 +42,8 @@ jobs:
 
   build-backend:
     description: Build backend with Release configuration
-    executor:
-      name: windows/default
+    docker:
+        - image: mcr.microsoft.com/dotnet/nightly/sdk:8.0
     steps:
       - add_ssh_keys
       - checkout

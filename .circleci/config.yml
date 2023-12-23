@@ -36,44 +36,45 @@ jobs:
             cd SuperChessFrontend
             pnpm build
       - persist_to_workspace:
-          root: SuperChessFrontend/dist
+          root: SuperChessFrontend
           paths:
-            - frontend_build
+            - dist
 
   build-backend:
     description: Build backend with Release configuration
     executor:
       name: windows/default
     steps:
+      - add_ssh_keys
       - checkout
-      # - restore_cache:
-      #     keys:
-      #       - dotnet-packages-v1-{{ checksum "SuperChessBackend/SuperChessBackend.csproj" }}
-      # - run:
-      #     name: "Install project dependencies"
-      #     command: |
-      #       cd SuperChessBackend
-      #       dotnet.exe restore
-      # - run:
-      #     name: "Build Application according to some given configuration"
-      #     command: |
-      #       cd SuperChessBackend
-      #       dotnet.exe build --configuration Release
-      # - run:
-      #     name: "Publish to a subfolder"
-      #     command: |
-      #       cd SuperChessBackend
-      #       dotnet.exe publish --configuration Release --output Build
-      # - run:
-      #     name: "Add appsettings.json"
-      #     command: |
-      #       cd SuperChessBackend
-      #       echo $appsettings > Build/appsettings.json
+      - restore_cache:
+          keys:
+            - dotnet-packages-v1-{{ checksum "SuperChessBackend/SuperChessBackend.csproj" }}
+      - run:
+          name: "Install project dependencies"
+          command: |
+            cd SuperChessBackend
+            dotnet.exe restore
+      - run:
+          name: "Build Application according to some given configuration"
+          command: |
+            cd SuperChessBackend
+            dotnet.exe build --configuration Release
+      - run:
+          name: "Publish to a subfolder"
+          command: |
+            cd SuperChessBackend
+            dotnet.exe publish --configuration Release --output Build
+      - run:
+          name: "Add appsettings.json"
+          command: |
+            cd SuperChessBackend
+            echo $appsettings > Build/appsettings.json
 
-      # - persist_to_workspace:
-      #     root: SuperChessBackend/Build
-      #     paths:
-      #       - backend_build
+      - persist_to_workspace:
+          root: SuperChessBackend
+          paths:
+            - Build
       
   deploy:
     docker:
@@ -85,16 +86,16 @@ jobs:
       - add_ssh_keys
       - attach_workspace:
           at: .
-
+    
       # Deploy frontend
       - run:
           name: Build react
-          command: rsync -e "ssh -o StrictHostKeyChecking=no" -arvc --delete ./frontend_build $VPS_USER@$VPS_URL:~/static/chess_frontend
+          command: rsync -e "ssh -o StrictHostKeyChecking=no" -arvc --delete ./dist $VPS_USER@$VPS_URL:~/static/chess_frontend
 
       # Send backend
       - run:
           name: Build react
-          command: rsync -e "ssh -o StrictHostKeyChecking=no" -arvc --delete ./backend_build $VPS_USER@$VPS_URL:~/containers/chess_backend
+          command: rsync -e "ssh -o StrictHostKeyChecking=no" -arvc --delete ./Build $VPS_USER@$VPS_URL:~/containers/chess_backend
 
       # Start backend
       # - run: > 

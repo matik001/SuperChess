@@ -8,37 +8,36 @@ jobs:
     description: Build frontend
     docker:
       - image: cimg/node:21.4.0
-    parallelism: 10
     steps:
       - checkout
-      - restore_cache:
-          name: Restore pnpm Package Cache
-          keys:
-            - pnpm-packages-{{ checksum "SuperChessFrontend/pnpm-lock.yaml" }}
-      - run:
-          name: Install pnpm package manager
-          command: |
-            corepack enable
-            corepack prepare pnpm@latest-8 --activate
-      - run:
-          name: Install Dependencies
-          command: |
-            cd SuperChessFrontend
-            pnpm install
-      - save_cache:
-          name: Save pnpm Package Cache
-          key: pnpm-packages-{{ checksum "SuperChessFrontend/pnpm-lock.yaml" }}
-          paths:
-            - node_modules
-      - run:
-          name: Build react
-          command: |
-            cd SuperChessFrontend
-            pnpm build
-      - persist_to_workspace:
-          root: SuperChessFrontend/dist
-          paths:
-            - frontend_build
+      # - restore_cache:
+      #     name: Restore pnpm Package Cache
+      #     keys:
+      #       - pnpm-packages-{{ checksum "SuperChessFrontend/pnpm-lock.yaml" }}
+      # - run:
+      #     name: Install pnpm package manager
+      #     command: |
+      #       corepack enable
+      #       corepack prepare pnpm@latest-8 --activate
+      # - run:
+      #     name: Install Dependencies
+      #     command: |
+      #       cd SuperChessFrontend
+      #       pnpm install
+      # - save_cache:
+      #     name: Save pnpm Package Cache
+      #     key: pnpm-packages-{{ checksum "SuperChessFrontend/pnpm-lock.yaml" }}
+      #     paths:
+      #       - node_modules
+      # - run:
+      #     name: Build react
+      #     command: |
+      #       cd SuperChessFrontend
+      #       pnpm build
+      # - persist_to_workspace:
+      #     root: SuperChessFrontend/dist
+      #     paths:
+      #       - frontend_build
 
   build-backend:
     description: Build backend with Release configuration

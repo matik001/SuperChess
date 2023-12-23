@@ -54,17 +54,22 @@ jobs:
           name: "Install project dependencies"
           command: |
             cd SuperChessBackend
-            dotnet.exe restore
+            dotnet restore
+      # - save_cache:
+      #     name: Save nugets cache
+      #     key: dotnet-packages-v1-{{ checksum "SuperChessBackend/SuperChessBackend.csproj" }}
+      #     paths:
+      #       - C:\Users\circleci\.nuget\packages  TODO poprawic sciezke
       - run:
           name: "Build Application according to some given configuration"
           command: |
             cd SuperChessBackend
-            dotnet.exe build --configuration Release
+            dotnet build --configuration Release
       - run:
           name: "Publish to a subfolder"
           command: |
             cd SuperChessBackend
-            dotnet.exe publish --configuration Release --output Build
+            dotnet publish --configuration Release --output Build
       - run:
           name: "Add appsettings.json"
           command: |

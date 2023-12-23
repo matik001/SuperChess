@@ -18,7 +18,7 @@ jobs:
           name: Install pnpm package manager
           command: |
             cd SuperChessFrontend
-            corepack enable
+            sudo corepack enable
             sudo corepack prepare pnpm@latest-8 --activate
       - run:
           name: Install Dependencies

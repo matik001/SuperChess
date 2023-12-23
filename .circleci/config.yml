@@ -10,34 +10,35 @@ jobs:
       - image: cimg/node:21.4.0
     steps:
       - checkout
-      # - restore_cache:
-      #     name: Restore pnpm Package Cache
-      #     keys:
-      #       - pnpm-packages-{{ checksum "SuperChessFrontend/pnpm-lock.yaml" }}
-      # - run:
-      #     name: Install pnpm package manager
-      #     command: |
-      #       corepack enable
-      #       corepack prepare pnpm@latest-8 --activate
-      # - run:
-      #     name: Install Dependencies
-      #     command: |
-      #       cd SuperChessFrontend
-      #       pnpm install
-      # - save_cache:
-      #     name: Save pnpm Package Cache
-      #     key: pnpm-packages-{{ checksum "SuperChessFrontend/pnpm-lock.yaml" }}
-      #     paths:
-      #       - node_modules
-      # - run:
-      #     name: Build react
-      #     command: |
-      #       cd SuperChessFrontend
-      #       pnpm build
-      # - persist_to_workspace:
-      #     root: SuperChessFrontend/dist
-      #     paths:
-      #       - frontend_build
+      - restore_cache:
+          name: Restore pnpm Package Cache
+          keys:
+            - pnpm-packages-{{ checksum "SuperChessFrontend/pnpm-lock.yaml" }}
+      - run:
+          name: Install pnpm package manager
+          command: |
+            cd SuperChessFrontend
+            corepack enable
+            corepack prepare pnpm@latest-8 --activate
+      - run:
+          name: Install Dependencies
+          command: |
+            cd SuperChessFrontend
+            pnpm install
+      - save_cache:
+          name: Save pnpm Package Cache
+          key: pnpm-packages-{{ checksum "SuperChessFrontend/pnpm-lock.yaml" }}
+          paths:
+            - node_modules
+      - run:
+          name: Build react
+          command: |
+            cd SuperChessFrontend
+            pnpm build
+      - persist_to_workspace:
+          root: SuperChessFrontend/dist
+          paths:
+            - frontend_build
 
   build-backend:
     description: Build backend with Release configuration
@@ -45,34 +46,34 @@ jobs:
       name: windows/default
     steps:
       - checkout
-      - restore_cache:
-          keys:
-            - dotnet-packages-v1-{{ checksum "SuperChessBackend/SuperChessBackend.csproj" }}
-      - run:
-          name: "Install project dependencies"
-          command: |
-            cd SuperChessBackend
-            dotnet.exe restore
-      - run:
-          name: "Build Application according to some given configuration"
-          command: |
-            cd SuperChessBackend
-            dotnet.exe build --configuration Release
-      - run:
-          name: "Publish to a subfolder"
-          command: |
-            cd SuperChessBackend
-            dotnet.exe publish --configuration Release --output Build
-      - run:
-          name: "Add appsettings.json"
-          command: |
-            cd SuperChessBackend
-            echo $appsettings > Build/appsettings.json
+      # - restore_cache:
+      #     keys:
+      #       - dotnet-packages-v1-{{ checksum "SuperChessBackend/SuperChessBackend.csproj" }}
+      # - run:
+      #     name: "Install project dependencies"
+      #     command: |
+      #       cd SuperChessBackend
+      #       dotnet.exe restore
+      # - run:
+      #     name: "Build Application according to some given configuration"
+      #     command: |
+      #       cd SuperChessBackend
+      #       dotnet.exe build --configuration Release
+      # - run:
+      #     name: "Publish to a subfolder"
+      #     command: |
+      #       cd SuperChessBackend
+      #       dotnet.exe publish --configuration Release --output Build
+      # - run:
+      #     name: "Add appsettings.json"
+      #     command: |
+      #       cd SuperChessBackend
+      #       echo $appsettings > Build/appsettings.json
 
-      - persist_to_workspace:
-          root: SuperChessBackend/Build
-          paths:
-            - backend_build
+      # - persist_to_workspace:
+      #     root: SuperChessBackend/Build
+      #     paths:
+      #       - backend_build
       
   deploy:
     docker:

@@ -54,32 +54,32 @@ jobs:
           name: "Install project dependencies"
           command: |
             cd SuperChessBackend
-            dotnet restore
+            dotnet restore "SuperChessBackend.csproj"
       - save_cache:
           name: Save nugets cache
           key: dotnet-packages-v1-{{ checksum "SuperChessBackend/SuperChessBackend.csproj" }}
           paths:
             - /root/.nuget/packages
       - run:
+          name: "Add appsettings.json"
+          command: |
+            cd SuperChessBackend
+            echo $appsettings > appsettings.json
+      - run:
           name: "Build Application according to some given configuration"
           command: |
             cd SuperChessBackend
-            dotnet build --configuration Release
+            dotnet build "SuperChessBackend.csproj" -c Release
       - run:
           name: "Publish to a subfolder"
           command: |
             cd SuperChessBackend
-            dotnet publish --configuration Release --output Build
-      - run:
-          name: "Add appsettings.json"
-          command: |
-            cd SuperChessBackend
-            echo $appsettings > Build/appsettings.json
+            dotnet publish "SuperChessBackend.csproj" -c Release -o ./backend_build /p:UseAppHost=false
 
       - persist_to_workspace:
           root: SuperChessBackend
           paths:
-            - Build
+            - backend_build
       
   deploy:
     docker:
@@ -94,20 +94,19 @@ jobs:
     
       # Deploy frontend
       - run:
-          name: Build react
+          name: Upload frontend
           command: rsync -e "ssh -o StrictHostKeyChecking=no" -arvc --delete ./dist/* $VPS_USER@$VPS_URL:~/static/chess_frontend
 
       # Send backend
       - run:
-          name: Build react
-          command: rsync -e "ssh -o StrictHostKeyChecking=no" -arvc --delete ./Build/* $VPS_USER@$VPS_URL:~/containers/chess_backend
+          name: Upload backend
+          command: rsync -e "ssh -o StrictHostKeyChecking=no" -arvc --delete ./backend_build/* $VPS_USER@$VPS_URL:~/containers/chess_backend
 
       # Start backend
-      # - run: > 
-      #     ssh -o StrictHostKeyChecking=no $VPS_USER@$VPS_URL "
-      #       export DB_CONNECTION_STRING=$DB_CONNECTION_STRING ; 
-      #       cd ./containers/chess_backend ;
-      #       docker compose -f docker-compose.prod.yaml up --build -d"
+      - run: > 
+          ssh -o StrictHostKeyChecking=no $VPS_USER@$VPS_URL "
+            docker stop superchess_backend;
+            docker run -v ~/containers/chess_backend:/app --name superchess_backend --rm -d -p 5555:8080 mcr.microsoft.com/dotnet/aspnet:8.0 dotnet /app/SuperChessBackend.dll;"
       
 
       # copies files from pipeline to vps via ssh

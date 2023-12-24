@@ -43,7 +43,7 @@ jobs:
   build-backend:
     description: Build backend with Release configuration
     docker:
-        - image: mcr.microsoft.com/dotnet/nightly/sdk:8.0
+        - image: mcr.microsoft.com/dotnet/sdk:8.0
     steps:
       - add_ssh_keys
       - checkout
@@ -64,7 +64,7 @@ jobs:
           name: "Add appsettings.json"
           command: |
             cd SuperChessBackend
-            echo $appsettings > appsettings.json
+            echo $appsettings | base64 --decode > appsettings.json
       - run:
           name: "Build Application according to some given configuration"
           command: |

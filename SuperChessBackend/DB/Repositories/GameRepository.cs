@@ -69,6 +69,10 @@ namespace SuperChessBackend.DB.Repositories
             }
         }
 
+        [ForeignKey("Room")]
+        public int? RoomId { get; set; }
+        public virtual Room? Room { get; set; }
+
         public virtual ICollection<UserGame> UserGame { get; set; }
         public virtual ICollection<User> Users { get; set; }
     }

@@ -20,6 +20,7 @@ namespace SuperChessBackend.DB
         public DbSet<UserGame> UserGames { get; set; }
         public DbSet<RefreshToken> RefreshTokens { get; set; }
         public DbSet<RevokedToken> RevokedTokens { get; set; }
+        public DbSet<Room> Rooms { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -83,8 +84,14 @@ namespace SuperChessBackend.DB
                 .HasMany(e => e.RevokedTokens)
                 .WithOne(e => e.User);
 
+            builder.Entity<Room>()
+                .HasMany(e => e.Users)
+                .WithOne(e => e.CurrentRoom).HasForeignKey(a=>a.RoomId);
 
-            
+            builder.Entity<Room>()
+                .HasMany(e => e.Game)
+                .WithOne(e => e.Room);
+
 
 
             /////

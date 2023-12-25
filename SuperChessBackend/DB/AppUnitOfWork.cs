@@ -12,6 +12,7 @@ namespace SuperChessBackend.DB
         IGameRepository UserGameRepository { get; }
         IRefreshTokenRepository RefreshTokenRepository { get; }
         IRevokedTokenRepository RevokedTokenRepository { get; }
+        IRoomRepository RoomRepository { get; }
         Task<int> SaveChangesAsync();
     }
     public class AppUnitOfWork : IAppUnitOfWork
@@ -119,6 +120,18 @@ namespace SuperChessBackend.DB
                     _revokedTokenRepository = new RevokedTokenRepository(_dbContext);
                 }
                 return _revokedTokenRepository;
+            }
+        }
+        private IRoomRepository _roomRepository;
+        public IRoomRepository RoomRepository
+        {
+            get
+            {
+                if (_roomRepository == null)
+                {
+                    _roomRepository = new RoomRepository(_dbContext);
+                }
+                return _roomRepository;
             }
         }
         public async Task<int> SaveChangesAsync()

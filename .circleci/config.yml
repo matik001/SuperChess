@@ -105,9 +105,9 @@ jobs:
 
       # Start backend
       - run: > 
-          ssh -o StrictHostKeyChecking=no $VPS_USER@$VPS_URL "
-            docker stop superchess_backend  || true;
-            docker run -v ~/containers/chess_backend:/app --name superchess_backend --rm -d -p 5555:8080 mcr.microsoft.com/dotnet/aspnet:8.0 /bin/bash -c \"cd /app ; dotnet SuperChessBackend.dll\""
+          ssh -o StrictHostKeyChecking=no $VPS_USER@$VPS_URL '
+            docker stop superchess_backend ;
+            docker run -v ~/containers/chess_backend:/app --name superchess_backend --rm -d -p 5555:8080 mcr.microsoft.com/dotnet/aspnet:8.0 /bin/bash -c "cd /app ; dotnet SuperChessBackend.dll" '
       
 
       # copies files from pipeline to vps via ssh

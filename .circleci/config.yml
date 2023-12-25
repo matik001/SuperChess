@@ -64,8 +64,8 @@ jobs:
           name: "Add appsettings.json"
           command: |
             cd SuperChessBackend
-            echo $appsettings > appsettings.json
-            base64 --decode appsettings.json > appsettings.json
+            echo $appsettings > appsettings_base64.json
+            base64 --decode appsettings_base64.json > appsettings.json
       - run:
           name: "Build Application according to some given configuration"
           command: |

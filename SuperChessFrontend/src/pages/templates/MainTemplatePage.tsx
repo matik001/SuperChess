@@ -1,4 +1,5 @@
 import { Button, Switch } from 'antd';
+import LogoImageSrc from 'assets/logo.png?url';
 import { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { MdOutlineDarkMode, MdOutlineWbSunny } from 'react-icons/md';
@@ -7,19 +8,15 @@ import { useDarkMode } from 'usehooks-ts';
 const Title = styled.h1`
 	text-align: center;
 	font-weight: 400;
-	font-size: 46px;
-	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	font-size: 32px;
 	pointer-events: none;
 	user-select: none;
 `;
 const ThemeSwitch = styled(Switch)`
-	position: absolute;
-	right: 30px;
-	top: 30px;
 	& .ant-switch-handle::before {
 		background-color: black;
 	}
-	/* width: 50px; */
+	margin-left: 7px;
 `;
 const DarkModeIcon = styled(MdOutlineDarkMode)`
 	font-size: 18px;
@@ -28,7 +25,6 @@ const LightModeIcon = styled(MdOutlineWbSunny)`
 	font-size: 18px;
 `;
 interface MainTemplatePageProps {
-	showTitle?: boolean;
 	children: ReactNode;
 }
 const Layout = styled.div`
@@ -37,33 +33,39 @@ const Layout = styled.div`
 	display: flex;
 	flex-direction: column;
 `;
-const MainTemplatePage = ({ children, showTitle }: MainTemplatePageProps) => {
-	if (showTitle === undefined) showTitle = true;
-
+const MenuRow = styled.div`
+	min-width: 100vh;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	padding: 16px;
+	background-color: ${(props) => props.theme.secondaryColor};
+	width: 100%;
+`;
+const MainTemplatePage = ({ children }: MainTemplatePageProps) => {
 	const { isDarkMode, toggle } = useDarkMode(true);
 	const { t, i18n } = useTranslation();
 	return (
 		<Layout>
-			<ThemeSwitch
-				checked={isDarkMode}
-				onClick={toggle}
-				checkedChildren={<DarkModeIcon />}
-				unCheckedChildren={<LightModeIcon />}
-			/>
-			<Button
-				style={{
-					position: 'fixed',
-					right: '95px',
-					top: '25px'
-				}}
-				type="text"
-				onClick={() => {
-					i18n.changeLanguage(i18n.language === 'pl' ? 'en' : 'pl');
-				}}
-			>
-				{i18n.language === 'pl' ? 'PL' : 'ENG'}
-			</Button>
-			{showTitle && <Title>{t('AppTitle')}</Title>}
+			<MenuRow>
+				<img height={40} style={{ marginRight: '5px' }} src={LogoImageSrc}></img>
+				<Title>{t('AppTitle')}</Title>
+				<Button
+					style={{ marginLeft: 'auto' }}
+					type="text"
+					onClick={() => {
+						i18n.changeLanguage(i18n.language === 'pl' ? 'en' : 'pl');
+					}}
+				>
+					{i18n.language === 'pl' ? 'PL' : 'ENG'}
+				</Button>
+				<ThemeSwitch
+					checked={isDarkMode}
+					onClick={toggle}
+					checkedChildren={<DarkModeIcon />}
+					unCheckedChildren={<LightModeIcon />}
+				/>
+			</MenuRow>
 
 			<div style={{ flex: 1, position: 'relative' }}>{children}</div>
 		</Layout>

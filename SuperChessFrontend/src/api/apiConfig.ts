@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import useAuthStore from 'store/authStore';
 
 export const appAxios = axios.create({
 	baseURL: '/api'
@@ -7,6 +8,8 @@ export const appAxios = axios.create({
 
 appAxios.interceptors.request.use(
 	function (config) {
+		config.headers['Authorization'] = 'Bearer ' + useAuthStore.getState().tokens?.token;
+
 		return config;
 	},
 	function (error) {

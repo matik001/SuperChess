@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication.Cookies;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -27,11 +28,13 @@ namespace SuperChessBackend.Services
     {
         private readonly IAppUnitOfWork uow;
         private readonly IHttpContextAccessor httpContextAccessor;
+        private readonly IMapper mapper;
 
-        public AuthService(IAppUnitOfWork uow, IHttpContextAccessor httpContextAccessor)
+        public AuthService(IAppUnitOfWork uow, IHttpContextAccessor httpContextAccessor, IMapper mapper)
         {
             this.uow = uow;
             this.httpContextAccessor = httpContextAccessor;
+            this.mapper = mapper;
         }
 
         public async Task<UserTokensDTO> CreateTokens(User user, string oldRefreshToken = null)
@@ -65,12 +68,15 @@ namespace SuperChessBackend.Services
 
 
             var newRefreshToken = await uow.RefreshTokenRepository.GenerateNewAndRemoveOld(user, oldRefreshToken);
+            var userDTO = mapper.Map<UserDTO>(user);
+
             return new UserTokensDTO()
             {
                 Token = tokenHandler.WriteToken(token),
                 TokenExpiration = token.ValidTo,
                 RefreshToken = newRefreshToken.Token,
                 RefreshTokenExpiration = newRefreshToken.ExpirationDate,
+                User = userDTO,
             };
         }
         public async Task<UserTokensDTO> SignIn(UserSignInRequestDTO loginReq)
@@ -116,6 +122,9 @@ namespace SuperChessBackend.Services
                         PasswordDate = DateTime.UtcNow,
                         PasswordHash = BC.HashPassword(signinReq.Password),
                     }
+                },
+                Roles = new List<Role>()
+                {
                 }
             };
             await uow.UserRepository.Create(user);
@@ -173,7 +182,7 @@ namespace SuperChessBackend.Services
             var principal = _getPrincipalFromExpiredToken(refreshToken.Token);
             var userIdStr = principal.FindFirst(ClaimTypes.NameIdentifier).Value;
             var userId = int.Parse(userIdStr);
-            var user = await uow.UserRepository.GetById(userId, a=>a.Include(x=>x.RefreshTokens));
+            var user = await uow.UserRepository.GetById(userId, a=>a.Include(x=>x.RefreshTokens).Include(x=>x.Roles));
             if(user == null)
             {
                 throw ServiceUtils.BadRequest();

@@ -22,6 +22,7 @@
     "**/*.{ts, tsx}": "tsc-files --noEmit"
   },
   "dependencies": {
+    "@ant-design/icons": "^5.2.6",
     "@tanstack/react-query": "^5.14.2",
     "@tanstack/react-query-devtools": "^5.14.5",
     "antd": "^5.12.5",

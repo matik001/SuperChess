@@ -33,10 +33,10 @@ const init = async () => {
 							<AppThemeProvider>
 								<Router />
 								<ReactQueryDevtools initialIsOpen={false} />
-								<ToastContainer position="bottom-right" />
 							</AppThemeProvider>
 						</Suspense>
 					</ErrorBoundary>
+					<ToastContainer position="bottom-right" />
 				</QueryClientProvider>
 			</AppTranslationsProvider>
 		</React.StrictMode>

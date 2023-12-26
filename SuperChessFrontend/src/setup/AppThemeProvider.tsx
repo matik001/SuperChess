@@ -1,5 +1,4 @@
 import { ConfigProvider, theme as antdTheme } from 'antd';
-import { lighten } from 'polished';
 import React, { ReactNode } from 'react';
 import { ThemeProvider, createGlobalStyle } from 'styled-components';
 import { useDarkMode } from 'usehooks-ts';
@@ -21,15 +20,28 @@ h1{
 	color: ${(args) => args.theme.primaryColor};
 
 }
+
 *{
-	font-family: 'Roboto', sans-serif;
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
 }
+
+/* https://stackoverflow.com/questions/2781549/removing-input-background-colour-for-chrome-autocomplete */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active{
+    -webkit-background-clip: text;
+	-webkit-text-fill-color: ${(p) => p.theme.textColor} !important;
+    transition: background-color 5000s ease-in-out 0s;
+    box-shadow: inset 0 0 20px 20px ${(p) => p.theme.secondaryColor};
+}
+
 `;
 export interface AppTheme {
 	primaryColor: string;
+	secondaryColor: string;
 	bgColor: string;
 	textColor: string;
 	isDarkMode: boolean;
@@ -42,14 +54,16 @@ const AppThemeProvider: React.FC<AppThemeProviderProps> = ({ children }) => {
 	const { isDarkMode } = useDarkMode();
 
 	const themeDark: AppTheme = {
-		primaryColor: 'orange',
+		primaryColor: '#c8923b',
+		secondaryColor: '#262421',
 		textColor: 'white',
-		bgColor: lighten(0.01, '#041527'),
+		bgColor: '#161513',
 		isDarkMode: true
 	};
 	const themeLight: AppTheme = {
-		primaryColor: '#f19808',
-		bgColor: '#efefef',
+		primaryColor: '#c8923b',
+		secondaryColor: 'white',
+		bgColor: '#ecebe9',
 		textColor: 'black',
 		isDarkMode: false
 	};

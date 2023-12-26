@@ -18,6 +18,7 @@ namespace SuperChessBackend.DTOs {
         public string RefreshToken { get; set; }
         public DateTime TokenExpiration { get; set; }
         public DateTime RefreshTokenExpiration { get; set; }
+        public UserDTO User { get; set; }
     }
 
     public class UserSignUpRequestDTO

@@ -1,12 +1,29 @@
 // import ChatsPage from 'pages/ChatPage';
 import NotFoundPage from 'pages/NotFoundPage';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import RoomsPage from 'pages/RoomsPage';
+import SignInPage from 'pages/SignInPage';
+import SignUpPage from 'pages/SignUpPage';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import useAuthStore from 'store/authStore';
 
 const Router = () => {
+	const tokens = useAuthStore((a) => a.tokens);
+	const isLoggedIn = !!tokens;
 	return (
 		<BrowserRouter>
 			<Routes>
-				{/* <Route path="/" element={<ChatsPage />} /> */}
+				{isLoggedIn ? (
+					<>
+						<Route path="/signin" element={<Navigate to="/" />} />
+						<Route path="/signup" element={<Navigate to="/" />} />
+					</>
+				) : (
+					<>
+						<Route path="/signin" element={<SignInPage />} />
+						<Route path="/signup" element={<SignUpPage />} />
+					</>
+				)}
+				<Route path="/" element={<RoomsPage />} />
 				<Route path="*" element={<NotFoundPage />} />
 			</Routes>
 		</BrowserRouter>

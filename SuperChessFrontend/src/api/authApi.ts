@@ -1,49 +1,47 @@
 import { appAxios } from './apiConfig';
+import { UserDTO } from './userApi';
 
-export type MessageRole = 'assistant' | 'system' | 'user';
-export interface Message {
-	id: number;
-	role: MessageRole;
-	content: string;
+export interface UserSignUpRequestDTO {
+	userName: string;
+	email: string;
+	password: string;
 }
-export interface Chat {
-	id: number;
-	title: string;
+export interface UserSignInRequestDTO {
+	userName: string;
+	password: string;
 }
-export interface ChatWithMessages extends Chat {
-	messages?: Message[];
+export interface UserTokensDTO {
+	token: string;
+	refreshToken: string;
+	tokenExpiration: Date;
+	refreshTokenExpiration: Date;
+	user: UserDTO;
+}
+export interface RefreshTokenRequstDTO {
+	token: string;
+	refreshToken: string;
 }
 
-export const createChat_KEY = 'CreateChat';
-export const createChat = async (title?: string) => {
-	const res = await appAxios.post<unknown>('/chat', {
-		...(title != null ? { title: title } : {})
-	});
+export const QUERYKEY_SIGNUP = 'QUERYKEY_SIGNUP';
+export const signup = async (requestData: UserSignUpRequestDTO) => {
+	const res = await appAxios.post<UserTokensDTO>('/v1/Auth/signup', requestData);
 	return res.data;
 };
 
-export const getChats_KEY = 'GetChat';
-export const getChats = async () => {
-	const res = await appAxios.get<Chat[]>(`/chat`);
+export const QUERYKEY_SIGNIN = 'QUERYKEY_SIGNIN';
+export const signin = async (requestData: UserSignInRequestDTO) => {
+	const res = await appAxios.post<UserTokensDTO>('/v1/Auth/signin', requestData);
 	return res.data;
 };
 
-export const getChatWithMessages_KEY = 'GetChatWithMessages';
-export const getChatWithMessages = async (id: number) => {
-	const res = await appAxios.get<ChatWithMessages>(`/chat/${id}`);
+export const QUERYKEY_REFRESHTOKEN = 'QUERYKEY_REFRESHTOKEN';
+export const refreshToken = async (requestData: RefreshTokenRequstDTO) => {
+	const res = await appAxios.post<UserTokensDTO>('/v1/Auth/refresh-token', requestData);
 	return res.data;
 };
 
-export const deleteChat_KEY = 'DeleteChat';
-export const deleteChat = async (id: number) => {
-	const res = await appAxios.delete<ChatWithMessages>(`/chat/${id}`);
-	return res.data;
-};
-
-export const createMessage_KEY = 'CreateMessage';
-export const createMessage = async (chatId: number, content: string) => {
-	const res = await appAxios.post<unknown>(`/chat/${chatId}/messages`, {
-		content: content
-	});
+export const QUERYKEY_LOGOUT = 'QUERYKEY_LOGOUT';
+export const logout = async () => {
+	const res = await appAxios.post<UserTokensDTO>('/v1/Auth/logout', {});
 	return res.data;
 };

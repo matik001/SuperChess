@@ -25,6 +25,7 @@ module.exports = {
 		'no-empty-pattern': 'warn',
 		'no-mixed-spaces-and-tabs': 'warn',
 		'react-hooks/rules-of-hooks': 'error',
-		'react-hooks/exhaustive-deps': 'error'
+		'react-hooks/exhaustive-deps': 'error',
+    '@typescript-eslint/no-explicit-any': 'warn'
   },
 }

@@ -16,10 +16,9 @@ namespace SuperChessBackend.DB.Repositories
         [Column("RoomId")]
         public int Id { get; set; }
         public Guid RoomName { get; set; }
-        public DateTime RoomCreationDate { get; set; }
+        public DateTime CreationDate { get; set; }
 
-        public virtual ICollection<Game> Game { get; set; }
-        public virtual ICollection<User> Users { get; set; }
+        public virtual ICollection<Game> Games { get; set; }
     }
     public interface IRoomRepository : IGenericRepository<Room>
     {

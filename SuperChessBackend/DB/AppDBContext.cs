@@ -51,6 +51,10 @@ namespace SuperChessBackend.DB
                     .HasConversion(v => v,
                         v => new DateTime(v.Ticks, DateTimeKind.Utc));
 
+            builder.Entity<Room>()
+                    .Property(a => a.CreationDate)
+                    .HasConversion(v => v,
+                        v => new DateTime(v.Ticks, DateTimeKind.Utc));
 
             /////
             ///// relations
@@ -85,11 +89,7 @@ namespace SuperChessBackend.DB
                 .WithOne(e => e.User);
 
             builder.Entity<Room>()
-                .HasMany(e => e.Users)
-                .WithOne(e => e.CurrentRoom).HasForeignKey(a=>a.RoomId);
-
-            builder.Entity<Room>()
-                .HasMany(e => e.Game)
+                .HasMany(e => e.Games)
                 .WithOne(e => e.Room);
 
 

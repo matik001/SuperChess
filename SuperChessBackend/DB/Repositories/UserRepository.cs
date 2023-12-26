@@ -18,9 +18,6 @@ namespace SuperChessBackend.DB.Repositories
         public string UserEmail { get; set; }
         public DateTime CreationDate { get; set; }
 
-        [ForeignKey("CurrentRoom")]
-        public int? RoomId { get; set; }
-        public virtual Room? CurrentRoom { get; set; }
 
         public virtual ICollection<UserPassword> UserPasswords { get; set; }
 

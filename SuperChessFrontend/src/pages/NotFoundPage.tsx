@@ -51,7 +51,7 @@ const NotFoundPage: React.FC<NotFoundPageProps> = ({}) => {
 	const { t } = useTranslation();
 
 	return (
-		<MainTemplatePage showTitle={false}>
+		<MainTemplatePage>
 			<Container>
 				<ImageEdgeBlur>
 					<Image src={notFoundImg}></Image>

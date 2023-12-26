@@ -30,7 +30,6 @@ const SignInForm: React.FC<SignInFormProps> = ({}) => {
 	const isLoading = useAuthStore((a) => a.isLoading);
 
 	const {
-		register,
 		handleSubmit,
 		formState: { errors },
 		control

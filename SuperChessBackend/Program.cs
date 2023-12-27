@@ -10,7 +10,8 @@ using SuperChessBackend.Services;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Host.UseSerilog();
+builder.Host.UseSerilog((context, loggerConfiguration) => loggerConfiguration
+    .ReadFrom.Configuration(context.Configuration));
 
 var services = builder.Services;
 // Add services to the container.

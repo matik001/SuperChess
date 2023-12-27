@@ -1,0 +1,728 @@
+2023-12-27 00:26:43.850 +01:00 [INF] Executed DbCommand (157ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1 FROM pg_catalog.pg_class c
+    JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace
+    WHERE n.nspname='public' AND
+          c.relname='__EFMigrationsHistory'
+)
+2023-12-27 00:26:44.020 +01:00 [INF] Executed DbCommand (134ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+2023-12-27 00:26:44.770 +01:00 [INF] Executed DbCommand (116ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1 FROM pg_catalog.pg_class c
+    JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace
+    WHERE n.nspname='public' AND
+          c.relname='__EFMigrationsHistory'
+)
+2023-12-27 00:26:45.494 +01:00 [INF] Executed DbCommand (112ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1 FROM pg_catalog.pg_class c
+    JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace
+    WHERE n.nspname='public' AND
+          c.relname='__EFMigrationsHistory'
+)
+2023-12-27 00:26:45.613 +01:00 [INF] Executed DbCommand (118ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+2023-12-27 00:26:45.625 +01:00 [INF] Applying migration '20231226232632_ChangeRoomNameType'.
+2023-12-27 00:26:46.011 +01:00 [INF] Executed DbCommand (343ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE room ALTER COLUMN "RoomName" TYPE text;
+2023-12-27 00:26:46.125 +01:00 [INF] Executed DbCommand (113ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "__EFMigrationsHistory" ("MigrationId", "ProductVersion")
+VALUES ('20231226232632_ChangeRoomNameType', '8.0.0');
+2023-12-26 23:31:01.951 +00:00 [WRN] Using an in-memory repository. Keys will not be persisted to storage.
+2023-12-26 23:31:01.994 +00:00 [WRN] Neither user profile nor HKLM registry available. Using an ephemeral key repository. Protected data will be unavailable when application exits.
+2023-12-26 23:31:02.015 +00:00 [INF] Creating key {58a5367b-ddfb-4c68-b41d-42b93dcc7970} with creation date 2023-12-26 23:31:02Z, activation date 2023-12-26 23:31:02Z, and expiration date 2024-03-25 23:31:02Z.
+2023-12-26 23:31:02.085 +00:00 [WRN] No XML encryptor configured. Key {58a5367b-ddfb-4c68-b41d-42b93dcc7970} may be persisted to storage in unencrypted form.
+2023-12-26 23:31:02.582 +00:00 [INF] Now listening on: http://[::]:5555
+2023-12-26 23:31:02.583 +00:00 [INF] Now listening on: https://[::]:5556
+2023-12-26 23:31:02.586 +00:00 [INF] Application started. Press Ctrl+C to shut down.
+2023-12-26 23:31:02.588 +00:00 [INF] Hosting environment: Development
+2023-12-26 23:31:02.589 +00:00 [INF] Content root path: /app
+2023-12-26 23:31:03.651 +00:00 [INF] Request starting HTTP/2 GET https://localhost:5556/swagger/index.html - null null
+2023-12-26 23:31:03.989 +00:00 [INF] Request finished HTTP/2 GET https://localhost:5556/swagger/index.html - 200 null text/html;charset=utf-8 338.3823ms
+2023-12-26 23:31:04.776 +00:00 [INF] Request starting HTTP/2 GET https://localhost:5556/swagger/v1/swagger.json - null null
+2023-12-26 23:31:05.020 +00:00 [INF] Request finished HTTP/2 GET https://localhost:5556/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 243.6986ms
+2023-12-26 23:31:47.971 +00:00 [INF] Request starting HTTP/1.1 POST http://127.0.0.1:5555/api/v1/Room - application/json 25
+2023-12-26 23:31:47.980 +00:00 [INF] CORS policy execution successful.
+2023-12-26 23:31:48.109 +00:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+2023-12-26 23:31:48.126 +00:00 [INF] Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+2023-12-26 23:31:48.136 +00:00 [INF] Executing endpoint 'SuperChessBackend.Controllers.v1.RoomController.Post (SuperChessBackend)'
+2023-12-26 23:31:48.166 +00:00 [INF] Route matched with {action = "Post", controller = "Room"}. Executing controller action with signature System.Threading.Tasks.Task`1[SuperChessBackend.DTOs.RoomDTO] Post(SuperChessBackend.DTOs.RoomCreateDTO) on controller SuperChessBackend.Controllers.v1.RoomController (SuperChessBackend).
+2023-12-26 23:31:51.122 +00:00 [INF] Executed DbCommand (199ms) [Parameters=[@p0='?' (DbType = DateTime), @p1='?'], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO room ("CreationDate", "RoomName")
+VALUES (@p0, @p1)
+RETURNING "RoomId";
+2023-12-26 23:31:51.202 +00:00 [INF] Executing ObjectResult, writing value of type 'SuperChessBackend.DTOs.RoomDTO'.
+2023-12-26 23:31:51.257 +00:00 [INF] Executed action SuperChessBackend.Controllers.v1.RoomController.Post (SuperChessBackend) in 3082.8412ms
+2023-12-26 23:31:51.259 +00:00 [INF] Executed endpoint 'SuperChessBackend.Controllers.v1.RoomController.Post (SuperChessBackend)'
+2023-12-26 23:31:51.274 +00:00 [INF] Request finished HTTP/1.1 POST http://127.0.0.1:5555/api/v1/Room - 200 78 application/json; charset=utf-8 3300.5531ms
+2023-12-26 23:31:51.293 +00:00 [INF] Request starting HTTP/1.1 GET http://127.0.0.1:5555/api/v1/Room - null null
+2023-12-26 23:31:51.299 +00:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+2023-12-26 23:31:51.301 +00:00 [INF] Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+2023-12-26 23:31:51.304 +00:00 [INF] Executing endpoint 'SuperChessBackend.Controllers.v1.RoomController.Get (SuperChessBackend)'
+2023-12-26 23:31:51.309 +00:00 [INF] Route matched with {action = "Get", controller = "Room"}. Executing controller action with signature System.Collections.Generic.IEnumerable`1[SuperChessBackend.DTOs.RoomExtendedDTO] Get() on controller SuperChessBackend.Controllers.v1.RoomController (SuperChessBackend).
+2023-12-26 23:31:51.868 +00:00 [INF] Executed DbCommand (115ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT r."RoomId" AS "Id", r."CreationDate", r."RoomName", (
+    SELECT count(*)::int
+    FROM game AS g
+    WHERE r."RoomId" = g."RoomId") AS "AmountOfUsers"
+FROM room AS r
+2023-12-26 23:31:51.883 +00:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[SuperChessBackend.DTOs.RoomExtendedDTO, SuperChessBackend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2023-12-26 23:31:51.896 +00:00 [INF] Executed action SuperChessBackend.Controllers.v1.RoomController.Get (SuperChessBackend) in 585.6839ms
+2023-12-26 23:31:51.898 +00:00 [INF] Executed endpoint 'SuperChessBackend.Controllers.v1.RoomController.Get (SuperChessBackend)'
+2023-12-26 23:31:51.900 +00:00 [INF] Request finished HTTP/1.1 GET http://127.0.0.1:5555/api/v1/Room - 200 97 application/json; charset=utf-8 606.514ms
+2023-12-26 23:33:10.691 +00:00 [INF] Request starting HTTP/1.1 POST http://127.0.0.1:5555/api/v1/Room - application/json 25
+2023-12-26 23:33:10.725 +00:00 [INF] CORS policy execution successful.
+2023-12-26 23:33:10.750 +00:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+2023-12-26 23:33:10.755 +00:00 [INF] Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+2023-12-26 23:33:10.769 +00:00 [INF] Executing endpoint 'SuperChessBackend.Controllers.v1.RoomController.Post (SuperChessBackend)'
+2023-12-26 23:33:10.782 +00:00 [INF] Route matched with {action = "Post", controller = "Room"}. Executing controller action with signature System.Threading.Tasks.Task`1[SuperChessBackend.DTOs.RoomDTO] Post(SuperChessBackend.DTOs.RoomCreateDTO) on controller SuperChessBackend.Controllers.v1.RoomController (SuperChessBackend).
+2023-12-26 23:33:10.997 +00:00 [INF] Executed DbCommand (121ms) [Parameters=[@p0='?' (DbType = DateTime), @p1='?'], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO room ("CreationDate", "RoomName")
+VALUES (@p0, @p1)
+RETURNING "RoomId";
+2023-12-26 23:33:11.006 +00:00 [INF] Executing ObjectResult, writing value of type 'SuperChessBackend.DTOs.RoomDTO'.
+2023-12-26 23:33:11.012 +00:00 [INF] Executed action SuperChessBackend.Controllers.v1.RoomController.Post (SuperChessBackend) in 226.8692ms
+2023-12-26 23:33:11.017 +00:00 [INF] Executed endpoint 'SuperChessBackend.Controllers.v1.RoomController.Post (SuperChessBackend)'
+2023-12-26 23:33:11.020 +00:00 [INF] Request finished HTTP/1.1 POST http://127.0.0.1:5555/api/v1/Room - 200 78 application/json; charset=utf-8 333.0349ms
+2023-12-26 23:33:11.036 +00:00 [INF] Request starting HTTP/1.1 GET http://127.0.0.1:5555/api/v1/Room - null null
+2023-12-26 23:33:11.043 +00:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+2023-12-26 23:33:11.045 +00:00 [INF] Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+2023-12-26 23:33:11.051 +00:00 [INF] Executing endpoint 'SuperChessBackend.Controllers.v1.RoomController.Get (SuperChessBackend)'
+2023-12-26 23:33:11.055 +00:00 [INF] Route matched with {action = "Get", controller = "Room"}. Executing controller action with signature System.Collections.Generic.IEnumerable`1[SuperChessBackend.DTOs.RoomExtendedDTO] Get() on controller SuperChessBackend.Controllers.v1.RoomController (SuperChessBackend).
+2023-12-26 23:33:11.190 +00:00 [INF] Executed DbCommand (112ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT r."RoomId" AS "Id", r."CreationDate", r."RoomName", (
+    SELECT count(*)::int
+    FROM game AS g
+    WHERE r."RoomId" = g."RoomId") AS "AmountOfUsers"
+FROM room AS r
+2023-12-26 23:33:11.195 +00:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[SuperChessBackend.DTOs.RoomExtendedDTO, SuperChessBackend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2023-12-26 23:33:11.197 +00:00 [INF] Executed action SuperChessBackend.Controllers.v1.RoomController.Get (SuperChessBackend) in 138.9666ms
+2023-12-26 23:33:11.198 +00:00 [INF] Executed endpoint 'SuperChessBackend.Controllers.v1.RoomController.Get (SuperChessBackend)'
+2023-12-26 23:33:11.199 +00:00 [INF] Request finished HTTP/1.1 GET http://127.0.0.1:5555/api/v1/Room - 200 193 application/json; charset=utf-8 162.5716ms
+2023-12-26 23:33:53.013 +00:00 [INF] Request starting HTTP/1.1 POST http://127.0.0.1:5555/api/v1/Room - application/json 25
+2023-12-26 23:33:53.030 +00:00 [INF] CORS policy execution successful.
+2023-12-26 23:33:53.039 +00:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+2023-12-26 23:33:53.043 +00:00 [INF] Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+2023-12-26 23:33:53.048 +00:00 [INF] Executing endpoint 'SuperChessBackend.Controllers.v1.RoomController.Post (SuperChessBackend)'
+2023-12-26 23:33:53.053 +00:00 [INF] Route matched with {action = "Post", controller = "Room"}. Executing controller action with signature System.Threading.Tasks.Task`1[SuperChessBackend.DTOs.RoomDTO] Post(SuperChessBackend.DTOs.RoomCreateDTO) on controller SuperChessBackend.Controllers.v1.RoomController (SuperChessBackend).
+2023-12-26 23:33:53.242 +00:00 [INF] Executed DbCommand (121ms) [Parameters=[@p0='?' (DbType = DateTime), @p1='?'], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO room ("CreationDate", "RoomName")
+VALUES (@p0, @p1)
+RETURNING "RoomId";
+2023-12-26 23:33:53.251 +00:00 [INF] Executing ObjectResult, writing value of type 'SuperChessBackend.DTOs.RoomDTO'.
+2023-12-26 23:33:53.253 +00:00 [INF] Executed action SuperChessBackend.Controllers.v1.RoomController.Post (SuperChessBackend) in 199.3301ms
+2023-12-26 23:33:53.255 +00:00 [INF] Executed endpoint 'SuperChessBackend.Controllers.v1.RoomController.Post (SuperChessBackend)'
+2023-12-26 23:33:53.256 +00:00 [INF] Request finished HTTP/1.1 POST http://127.0.0.1:5555/api/v1/Room - 200 78 application/json; charset=utf-8 246.0628ms
+2023-12-26 23:33:53.289 +00:00 [INF] Request starting HTTP/1.1 GET http://127.0.0.1:5555/api/v1/Room - null null
+2023-12-26 23:33:53.291 +00:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+2023-12-26 23:33:53.293 +00:00 [INF] Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+2023-12-26 23:33:53.294 +00:00 [INF] Executing endpoint 'SuperChessBackend.Controllers.v1.RoomController.Get (SuperChessBackend)'
+2023-12-26 23:33:53.297 +00:00 [INF] Route matched with {action = "Get", controller = "Room"}. Executing controller action with signature System.Collections.Generic.IEnumerable`1[SuperChessBackend.DTOs.RoomExtendedDTO] Get() on controller SuperChessBackend.Controllers.v1.RoomController (SuperChessBackend).
+2023-12-26 23:33:53.416 +00:00 [INF] Executed DbCommand (111ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT r."RoomId" AS "Id", r."CreationDate", r."RoomName", (
+    SELECT count(*)::int
+    FROM game AS g
+    WHERE r."RoomId" = g."RoomId") AS "AmountOfUsers"
+FROM room AS r
+2023-12-26 23:33:53.418 +00:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[SuperChessBackend.DTOs.RoomExtendedDTO, SuperChessBackend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2023-12-26 23:33:53.420 +00:00 [INF] Executed action SuperChessBackend.Controllers.v1.RoomController.Get (SuperChessBackend) in 121.5509ms
+2023-12-26 23:33:53.422 +00:00 [INF] Executed endpoint 'SuperChessBackend.Controllers.v1.RoomController.Get (SuperChessBackend)'
+2023-12-26 23:33:53.425 +00:00 [INF] Request finished HTTP/1.1 GET http://127.0.0.1:5555/api/v1/Room - 200 289 application/json; charset=utf-8 139.3348ms
+2023-12-26 23:35:28.720 +00:00 [INF] Request starting HTTP/1.1 POST http://127.0.0.1:5555/api/v1/Room - application/json 50
+2023-12-26 23:35:28.756 +00:00 [INF] CORS policy execution successful.
+2023-12-26 23:35:28.774 +00:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+2023-12-26 23:35:28.786 +00:00 [INF] Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+2023-12-26 23:35:28.799 +00:00 [INF] Executing endpoint 'SuperChessBackend.Controllers.v1.RoomController.Post (SuperChessBackend)'
+2023-12-26 23:35:28.816 +00:00 [INF] Route matched with {action = "Post", controller = "Room"}. Executing controller action with signature System.Threading.Tasks.Task`1[SuperChessBackend.DTOs.RoomDTO] Post(SuperChessBackend.DTOs.RoomCreateDTO) on controller SuperChessBackend.Controllers.v1.RoomController (SuperChessBackend).
+2023-12-26 23:35:29.090 +00:00 [INF] Executed DbCommand (145ms) [Parameters=[@p0='?' (DbType = DateTime), @p1='?'], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO room ("CreationDate", "RoomName")
+VALUES (@p0, @p1)
+RETURNING "RoomId";
+2023-12-26 23:35:29.103 +00:00 [INF] Executing ObjectResult, writing value of type 'SuperChessBackend.DTOs.RoomDTO'.
+2023-12-26 23:35:29.115 +00:00 [INF] Executed action SuperChessBackend.Controllers.v1.RoomController.Post (SuperChessBackend) in 295.0664ms
+2023-12-26 23:35:29.130 +00:00 [INF] Executed endpoint 'SuperChessBackend.Controllers.v1.RoomController.Post (SuperChessBackend)'
+2023-12-26 23:35:29.139 +00:00 [INF] Request finished HTTP/1.1 POST http://127.0.0.1:5555/api/v1/Room - 200 103 application/json; charset=utf-8 423.8496ms
+2023-12-26 23:35:29.202 +00:00 [INF] Request starting HTTP/1.1 GET http://127.0.0.1:5555/api/v1/Room - null null
+2023-12-26 23:35:29.212 +00:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+2023-12-26 23:35:29.262 +00:00 [INF] Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+2023-12-26 23:35:29.266 +00:00 [INF] Executing endpoint 'SuperChessBackend.Controllers.v1.RoomController.Get (SuperChessBackend)'
+2023-12-26 23:35:29.271 +00:00 [INF] Route matched with {action = "Get", controller = "Room"}. Executing controller action with signature System.Collections.Generic.IEnumerable`1[SuperChessBackend.DTOs.RoomExtendedDTO] Get() on controller SuperChessBackend.Controllers.v1.RoomController (SuperChessBackend).
+2023-12-26 23:35:29.432 +00:00 [INF] Executed DbCommand (119ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT r."RoomId" AS "Id", r."CreationDate", r."RoomName", (
+    SELECT count(*)::int
+    FROM game AS g
+    WHERE r."RoomId" = g."RoomId") AS "AmountOfUsers"
+FROM room AS r
+2023-12-26 23:35:29.438 +00:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[SuperChessBackend.DTOs.RoomExtendedDTO, SuperChessBackend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2023-12-26 23:35:29.445 +00:00 [INF] Executed action SuperChessBackend.Controllers.v1.RoomController.Get (SuperChessBackend) in 170.2862ms
+2023-12-26 23:35:29.447 +00:00 [INF] Executed endpoint 'SuperChessBackend.Controllers.v1.RoomController.Get (SuperChessBackend)'
+2023-12-26 23:35:29.451 +00:00 [INF] Request finished HTTP/1.1 GET http://127.0.0.1:5555/api/v1/Room - 200 410 application/json; charset=utf-8 248.4761ms
+2023-12-26 23:36:51.416 +00:00 [INF] Request starting HTTP/1.1 POST http://127.0.0.1:5555/api/v1/Room - application/json 18
+2023-12-26 23:36:51.442 +00:00 [INF] CORS policy execution successful.
+2023-12-26 23:36:51.458 +00:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+2023-12-26 23:36:51.467 +00:00 [INF] Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+2023-12-26 23:36:51.474 +00:00 [INF] Executing endpoint 'SuperChessBackend.Controllers.v1.RoomController.Post (SuperChessBackend)'
+2023-12-26 23:36:51.486 +00:00 [INF] Route matched with {action = "Post", controller = "Room"}. Executing controller action with signature System.Threading.Tasks.Task`1[SuperChessBackend.DTOs.RoomDTO] Post(SuperChessBackend.DTOs.RoomCreateDTO) on controller SuperChessBackend.Controllers.v1.RoomController (SuperChessBackend).
+2023-12-26 23:36:52.377 +00:00 [INF] Executed DbCommand (135ms) [Parameters=[@p0='?' (DbType = DateTime), @p1='?'], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO room ("CreationDate", "RoomName")
+VALUES (@p0, @p1)
+RETURNING "RoomId";
+2023-12-26 23:36:52.390 +00:00 [INF] Executing ObjectResult, writing value of type 'SuperChessBackend.DTOs.RoomDTO'.
+2023-12-26 23:36:52.400 +00:00 [INF] Executed action SuperChessBackend.Controllers.v1.RoomController.Post (SuperChessBackend) in 905.7792ms
+2023-12-26 23:36:52.405 +00:00 [INF] Executed endpoint 'SuperChessBackend.Controllers.v1.RoomController.Post (SuperChessBackend)'
+2023-12-26 23:36:52.410 +00:00 [INF] Request finished HTTP/1.1 POST http://127.0.0.1:5555/api/v1/Room - 200 71 application/json; charset=utf-8 999.5586ms
+2023-12-26 23:36:52.446 +00:00 [INF] Request starting HTTP/1.1 GET http://127.0.0.1:5555/api/v1/Room - null null
+2023-12-26 23:36:52.460 +00:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+2023-12-26 23:36:52.467 +00:00 [INF] Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+2023-12-26 23:36:52.471 +00:00 [INF] Executing endpoint 'SuperChessBackend.Controllers.v1.RoomController.Get (SuperChessBackend)'
+2023-12-26 23:36:52.477 +00:00 [INF] Route matched with {action = "Get", controller = "Room"}. Executing controller action with signature System.Collections.Generic.IEnumerable`1[SuperChessBackend.DTOs.RoomExtendedDTO] Get() on controller SuperChessBackend.Controllers.v1.RoomController (SuperChessBackend).
+2023-12-26 23:36:52.627 +00:00 [INF] Executed DbCommand (133ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT r."RoomId" AS "Id", r."CreationDate", r."RoomName", (
+    SELECT count(*)::int
+    FROM game AS g
+    WHERE r."RoomId" = g."RoomId") AS "AmountOfUsers"
+FROM room AS r
+2023-12-26 23:36:52.633 +00:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[SuperChessBackend.DTOs.RoomExtendedDTO, SuperChessBackend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2023-12-26 23:36:52.638 +00:00 [INF] Executed action SuperChessBackend.Controllers.v1.RoomController.Get (SuperChessBackend) in 158.3829ms
+2023-12-26 23:36:52.641 +00:00 [INF] Executed endpoint 'SuperChessBackend.Controllers.v1.RoomController.Get (SuperChessBackend)'
+2023-12-26 23:36:52.644 +00:00 [INF] Request finished HTTP/1.1 GET http://127.0.0.1:5555/api/v1/Room - 200 499 application/json; charset=utf-8 198.4385ms
+2023-12-26 23:36:55.257 +00:00 [INF] Request starting HTTP/1.1 POST http://127.0.0.1:5555/api/v1/Room - application/json 18
+2023-12-26 23:36:55.260 +00:00 [INF] CORS policy execution successful.
+2023-12-26 23:36:55.263 +00:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+2023-12-26 23:36:55.264 +00:00 [INF] Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+2023-12-26 23:36:55.266 +00:00 [INF] Executing endpoint 'SuperChessBackend.Controllers.v1.RoomController.Post (SuperChessBackend)'
+2023-12-26 23:36:55.268 +00:00 [INF] Route matched with {action = "Post", controller = "Room"}. Executing controller action with signature System.Threading.Tasks.Task`1[SuperChessBackend.DTOs.RoomDTO] Post(SuperChessBackend.DTOs.RoomCreateDTO) on controller SuperChessBackend.Controllers.v1.RoomController (SuperChessBackend).
+2023-12-26 23:36:55.405 +00:00 [INF] Executed DbCommand (130ms) [Parameters=[@p0='?' (DbType = DateTime), @p1='?'], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO room ("CreationDate", "RoomName")
+VALUES (@p0, @p1)
+RETURNING "RoomId";
+2023-12-26 23:36:55.407 +00:00 [INF] Executing ObjectResult, writing value of type 'SuperChessBackend.DTOs.RoomDTO'.
+2023-12-26 23:36:55.408 +00:00 [INF] Executed action SuperChessBackend.Controllers.v1.RoomController.Post (SuperChessBackend) in 138.5751ms
+2023-12-26 23:36:55.409 +00:00 [INF] Executed endpoint 'SuperChessBackend.Controllers.v1.RoomController.Post (SuperChessBackend)'
+2023-12-26 23:36:55.410 +00:00 [INF] Request finished HTTP/1.1 POST http://127.0.0.1:5555/api/v1/Room - 200 71 application/json; charset=utf-8 153.1513ms
+2023-12-26 23:36:55.441 +00:00 [INF] Request starting HTTP/1.1 GET http://127.0.0.1:5555/api/v1/Room - null null
+2023-12-26 23:36:55.443 +00:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+2023-12-26 23:36:55.445 +00:00 [INF] Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+2023-12-26 23:36:55.446 +00:00 [INF] Executing endpoint 'SuperChessBackend.Controllers.v1.RoomController.Get (SuperChessBackend)'
+2023-12-26 23:36:55.447 +00:00 [INF] Route matched with {action = "Get", controller = "Room"}. Executing controller action with signature System.Collections.Generic.IEnumerable`1[SuperChessBackend.DTOs.RoomExtendedDTO] Get() on controller SuperChessBackend.Controllers.v1.RoomController (SuperChessBackend).
+2023-12-26 23:36:55.571 +00:00 [INF] Executed DbCommand (120ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT r."RoomId" AS "Id", r."CreationDate", r."RoomName", (
+    SELECT count(*)::int
+    FROM game AS g
+    WHERE r."RoomId" = g."RoomId") AS "AmountOfUsers"
+FROM room AS r
+2023-12-26 23:36:55.574 +00:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[SuperChessBackend.DTOs.RoomExtendedDTO, SuperChessBackend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2023-12-26 23:36:55.576 +00:00 [INF] Executed action SuperChessBackend.Controllers.v1.RoomController.Get (SuperChessBackend) in 127.4394ms
+2023-12-26 23:36:55.579 +00:00 [INF] Executed endpoint 'SuperChessBackend.Controllers.v1.RoomController.Get (SuperChessBackend)'
+2023-12-26 23:36:55.580 +00:00 [INF] Request finished HTTP/1.1 GET http://127.0.0.1:5555/api/v1/Room - 200 588 application/json; charset=utf-8 138.9371ms
+2023-12-26 23:39:16.727 +00:00 [INF] Request starting HTTP/1.1 POST http://127.0.0.1:5555/api/v1/Room - application/json 18
+2023-12-26 23:39:16.760 +00:00 [INF] CORS policy execution successful.
+2023-12-26 23:39:16.780 +00:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+2023-12-26 23:39:16.786 +00:00 [INF] Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+2023-12-26 23:39:16.792 +00:00 [INF] Executing endpoint 'SuperChessBackend.Controllers.v1.RoomController.Post (SuperChessBackend)'
+2023-12-26 23:39:16.807 +00:00 [INF] Route matched with {action = "Post", controller = "Room"}. Executing controller action with signature System.Threading.Tasks.Task`1[SuperChessBackend.DTOs.RoomDTO] Post(SuperChessBackend.DTOs.RoomCreateDTO) on controller SuperChessBackend.Controllers.v1.RoomController (SuperChessBackend).
+2023-12-26 23:39:17.111 +00:00 [INF] Executed DbCommand (142ms) [Parameters=[@p0='?' (DbType = DateTime), @p1='?'], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO room ("CreationDate", "RoomName")
+VALUES (@p0, @p1)
+RETURNING "RoomId";
+2023-12-26 23:39:17.148 +00:00 [INF] Executing ObjectResult, writing value of type 'SuperChessBackend.DTOs.RoomDTO'.
+2023-12-26 23:39:17.158 +00:00 [INF] Executed action SuperChessBackend.Controllers.v1.RoomController.Post (SuperChessBackend) in 347.929ms
+2023-12-26 23:39:17.163 +00:00 [INF] Executed endpoint 'SuperChessBackend.Controllers.v1.RoomController.Post (SuperChessBackend)'
+2023-12-26 23:39:17.170 +00:00 [INF] Request finished HTTP/1.1 POST http://127.0.0.1:5555/api/v1/Room - 200 71 application/json; charset=utf-8 448.9661ms
+2023-12-26 23:39:17.200 +00:00 [INF] Request starting HTTP/1.1 GET http://127.0.0.1:5555/api/v1/Room - null null
+2023-12-26 23:39:17.211 +00:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+2023-12-26 23:39:17.213 +00:00 [INF] Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+2023-12-26 23:39:17.219 +00:00 [INF] Executing endpoint 'SuperChessBackend.Controllers.v1.RoomController.Get (SuperChessBackend)'
+2023-12-26 23:39:17.222 +00:00 [INF] Route matched with {action = "Get", controller = "Room"}. Executing controller action with signature System.Collections.Generic.IEnumerable`1[SuperChessBackend.DTOs.RoomExtendedDTO] Get() on controller SuperChessBackend.Controllers.v1.RoomController (SuperChessBackend).
+2023-12-26 23:39:17.375 +00:00 [INF] Executed DbCommand (125ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT r."RoomId" AS "Id", r."CreationDate", r."RoomName", (
+    SELECT count(*)::int
+    FROM game AS g
+    WHERE r."RoomId" = g."RoomId") AS "AmountOfUsers"
+FROM room AS r
+2023-12-26 23:39:17.384 +00:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[SuperChessBackend.DTOs.RoomExtendedDTO, SuperChessBackend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2023-12-26 23:39:17.389 +00:00 [INF] Executed action SuperChessBackend.Controllers.v1.RoomController.Get (SuperChessBackend) in 162.5185ms
+2023-12-26 23:39:17.398 +00:00 [INF] Executed endpoint 'SuperChessBackend.Controllers.v1.RoomController.Get (SuperChessBackend)'
+2023-12-26 23:39:17.404 +00:00 [INF] Request finished HTTP/1.1 GET http://127.0.0.1:5555/api/v1/Room - 200 677 application/json; charset=utf-8 202.7555ms
+2023-12-26 23:59:48.223 +00:00 [INF] Request starting HTTP/1.1 GET http://127.0.0.1:5555/api/v1/Room - null null
+2023-12-26 23:59:48.302 +00:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+2023-12-26 23:59:48.314 +00:00 [INF] Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+2023-12-26 23:59:48.326 +00:00 [INF] Executing endpoint 'SuperChessBackend.Controllers.v1.RoomController.Get (SuperChessBackend)'
+2023-12-26 23:59:48.348 +00:00 [INF] Route matched with {action = "Get", controller = "Room"}. Executing controller action with signature System.Collections.Generic.IEnumerable`1[SuperChessBackend.DTOs.RoomExtendedDTO] Get() on controller SuperChessBackend.Controllers.v1.RoomController (SuperChessBackend).
+2023-12-26 23:59:49.526 +00:00 [INF] Executed DbCommand (178ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT r."RoomId" AS "Id", r."CreationDate", r."RoomName", (
+    SELECT count(*)::int
+    FROM game AS g
+    WHERE r."RoomId" = g."RoomId") AS "AmountOfUsers"
+FROM room AS r
+2023-12-26 23:59:49.548 +00:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[SuperChessBackend.DTOs.RoomExtendedDTO, SuperChessBackend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2023-12-26 23:59:49.571 +00:00 [INF] Executed action SuperChessBackend.Controllers.v1.RoomController.Get (SuperChessBackend) in 1216.3224ms
+2023-12-26 23:59:49.574 +00:00 [INF] Executed endpoint 'SuperChessBackend.Controllers.v1.RoomController.Get (SuperChessBackend)'
+2023-12-26 23:59:49.586 +00:00 [INF] Request finished HTTP/1.1 GET http://127.0.0.1:5555/api/v1/Room - 200 677 application/json; charset=utf-8 1375.9216ms
+2023-12-27 00:00:13.116 +00:00 [INF] Request starting HTTP/1.1 POST http://127.0.0.1:5555/api/v1/Auth/signin - application/json 51
+2023-12-27 00:00:13.126 +00:00 [INF] CORS policy execution successful.
+2023-12-27 00:00:13.127 +00:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+2023-12-27 00:00:13.129 +00:00 [INF] Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+2023-12-27 00:00:13.135 +00:00 [INF] Executing endpoint 'SuperChessBackend.Controllers.v1.AuthController.SignIn (SuperChessBackend)'
+2023-12-27 00:00:13.200 +00:00 [INF] Route matched with {action = "SignIn", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[SuperChessBackend.DTOs.UserTokensDTO] SignIn(SuperChessBackend.DTOs.UserSignInRequestDTO) on controller SuperChessBackend.Controllers.v1.AuthController (SuperChessBackend).
+2023-12-27 00:00:14.289 +00:00 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2023-12-27 00:00:14.515 +00:00 [INF] Executed DbCommand (161ms) [Parameters=[@__userName_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT t."UserId", t."CreationDate", t."UserEmail", t."UserName", u0."PasswordId", u0."PasswordDate", u0."PasswordHash", u0."PasswordUserId", t0."RoleId", t0."RoleName", t0."RolesId", t0."UsersId"
+FROM (
+    SELECT u."UserId", u."CreationDate", u."UserEmail", u."UserName"
+    FROM "user" AS u
+    WHERE u."UserName" = @__userName_0
+    LIMIT 1
+) AS t
+LEFT JOIN userpassword AS u0 ON t."UserId" = u0."PasswordUserId"
+LEFT JOIN (
+    SELECT r0."RoleId", r0."RoleName", r."RolesId", r."UsersId"
+    FROM "RoleUser" AS r
+    INNER JOIN role AS r0 ON r."RolesId" = r0."RoleId"
+) AS t0 ON t."UserId" = t0."UsersId"
+ORDER BY t."UserId", u0."PasswordId", t0."RolesId", t0."UsersId"
+2023-12-27 00:00:14.824 +00:00 [INF] Executed action SuperChessBackend.Controllers.v1.AuthController.SignIn (SuperChessBackend) in 1622.4043ms
+2023-12-27 00:00:14.827 +00:00 [INF] Executed endpoint 'SuperChessBackend.Controllers.v1.AuthController.SignIn (SuperChessBackend)'
+2023-12-27 00:00:14.839 +00:00 [ERR] An unhandled exception has occurred while executing the request.
+SuperChessBackend.Services.ServiceException: Exception of type 'SuperChessBackend.Services.ServiceException' was thrown.
+   at SuperChessBackend.Services.AuthService.SignIn(UserSignInRequestDTO loginReq) in D:\Projects\SuperChess\SuperChessBackend\Services\AuthService.cs:line 89
+   at SuperChessBackend.Controllers.v1.AuthController.SignIn(UserSignInRequestDTO userDto) in D:\Projects\SuperChess\SuperChessBackend\Controllers\v1\AuthController.cs:line 38
+   at lambda_method105(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|7_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddlewareImpl.<Invoke>g__Awaited|10_0(ExceptionHandlerMiddlewareImpl middleware, HttpContext context, Task task)
+2023-12-27 00:00:14.928 +00:00 [ERR] SuperChessBackend.Services.ServiceException: Exception of type 'SuperChessBackend.Services.ServiceException' was thrown.
+   at SuperChessBackend.Services.AuthService.SignIn(UserSignInRequestDTO loginReq) in D:\Projects\SuperChess\SuperChessBackend\Services\AuthService.cs:line 89
+   at SuperChessBackend.Controllers.v1.AuthController.SignIn(UserSignInRequestDTO userDto) in D:\Projects\SuperChess\SuperChessBackend\Controllers\v1\AuthController.cs:line 38
+   at lambda_method105(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|7_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddlewareImpl.<Invoke>g__Awaited|10_0(ExceptionHandlerMiddlewareImpl middleware, HttpContext context, Task task)
+2023-12-27 00:00:14.960 +00:00 [ERR] Something went wrong: SuperChessBackend.Services.ServiceException: Exception of type 'SuperChessBackend.Services.ServiceException' was thrown.
+   at SuperChessBackend.Services.AuthService.SignIn(UserSignInRequestDTO loginReq) in D:\Projects\SuperChess\SuperChessBackend\Services\AuthService.cs:line 89
+   at SuperChessBackend.Controllers.v1.AuthController.SignIn(UserSignInRequestDTO userDto) in D:\Projects\SuperChess\SuperChessBackend\Controllers\v1\AuthController.cs:line 38
+   at lambda_method105(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|7_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddlewareImpl.<Invoke>g__Awaited|10_0(ExceptionHandlerMiddlewareImpl middleware, HttpContext context, Task task)
+2023-12-27 00:00:14.963 +00:00 [INF] Request finished HTTP/1.1 POST http://127.0.0.1:5555/api/v1/Auth/signin - 400 null application/json 1847.0143ms
+2023-12-27 00:32:39.087 +00:00 [INF] Request starting HTTP/1.1 GET http://127.0.0.1:5555/api/v1/Room - null null
+2023-12-27 00:32:39.157 +00:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+2023-12-27 00:32:39.169 +00:00 [INF] Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+2023-12-27 00:32:39.183 +00:00 [INF] Executing endpoint 'SuperChessBackend.Controllers.v1.RoomController.Get (SuperChessBackend)'
+2023-12-27 00:32:39.200 +00:00 [INF] Route matched with {action = "Get", controller = "Room"}. Executing controller action with signature System.Collections.Generic.IEnumerable`1[SuperChessBackend.DTOs.RoomExtendedDTO] Get() on controller SuperChessBackend.Controllers.v1.RoomController (SuperChessBackend).
+2023-12-27 00:32:40.214 +00:00 [INF] Executed DbCommand (183ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT r."RoomId" AS "Id", r."CreationDate", r."RoomName", (
+    SELECT count(*)::int
+    FROM game AS g
+    WHERE r."RoomId" = g."RoomId") AS "AmountOfUsers"
+FROM room AS r
+2023-12-27 00:32:40.234 +00:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[SuperChessBackend.DTOs.RoomExtendedDTO, SuperChessBackend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2023-12-27 00:32:40.273 +00:00 [INF] Executed action SuperChessBackend.Controllers.v1.RoomController.Get (SuperChessBackend) in 1067.1144ms
+2023-12-27 00:32:40.278 +00:00 [INF] Executed endpoint 'SuperChessBackend.Controllers.v1.RoomController.Get (SuperChessBackend)'
+2023-12-27 00:32:40.283 +00:00 [INF] Request finished HTTP/1.1 GET http://127.0.0.1:5555/api/v1/Room - 200 677 application/json; charset=utf-8 1199.8504ms
+2023-12-27 00:46:44.764 +00:00 [INF] Request starting HTTP/1.1 GET http://127.0.0.1:5555/api/v1/Room - null null
+2023-12-27 00:46:44.908 +00:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+2023-12-27 00:46:44.930 +00:00 [INF] Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+2023-12-27 00:46:44.949 +00:00 [INF] Executing endpoint 'SuperChessBackend.Controllers.v1.RoomController.Get (SuperChessBackend)'
+2023-12-27 00:46:44.969 +00:00 [INF] Route matched with {action = "Get", controller = "Room"}. Executing controller action with signature System.Collections.Generic.IEnumerable`1[SuperChessBackend.DTOs.RoomExtendedDTO] Get() on controller SuperChessBackend.Controllers.v1.RoomController (SuperChessBackend).
+2023-12-27 00:46:46.255 +00:00 [INF] Executed DbCommand (229ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT r."RoomId" AS "Id", r."CreationDate", r."RoomName", (
+    SELECT count(*)::int
+    FROM game AS g
+    WHERE r."RoomId" = g."RoomId") AS "AmountOfUsers"
+FROM room AS r
+2023-12-27 00:46:46.298 +00:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[SuperChessBackend.DTOs.RoomExtendedDTO, SuperChessBackend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2023-12-27 00:46:46.330 +00:00 [INF] Executed action SuperChessBackend.Controllers.v1.RoomController.Get (SuperChessBackend) in 1356.3292ms
+2023-12-27 00:46:46.335 +00:00 [INF] Executed endpoint 'SuperChessBackend.Controllers.v1.RoomController.Get (SuperChessBackend)'
+2023-12-27 00:46:46.348 +00:00 [INF] Request finished HTTP/1.1 GET http://127.0.0.1:5555/api/v1/Room - 200 677 application/json; charset=utf-8 1591.617ms
+2023-12-27 01:13:17.739 +00:00 [INF] Request starting HTTP/1.1 GET http://127.0.0.1:5555/api/v1/Room - null null
+2023-12-27 01:13:17.839 +00:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+2023-12-27 01:13:17.861 +00:00 [INF] Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+2023-12-27 01:13:17.877 +00:00 [INF] Executing endpoint 'SuperChessBackend.Controllers.v1.RoomController.Get (SuperChessBackend)'
+2023-12-27 01:13:17.903 +00:00 [INF] Route matched with {action = "Get", controller = "Room"}. Executing controller action with signature System.Collections.Generic.IEnumerable`1[SuperChessBackend.DTOs.RoomExtendedDTO] Get() on controller SuperChessBackend.Controllers.v1.RoomController (SuperChessBackend).
+2023-12-27 01:13:19.117 +00:00 [INF] Executed DbCommand (165ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT r."RoomId" AS "Id", r."CreationDate", r."RoomName", (
+    SELECT count(*)::int
+    FROM game AS g
+    WHERE r."RoomId" = g."RoomId") AS "AmountOfUsers"
+FROM room AS r
+2023-12-27 01:13:19.140 +00:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[SuperChessBackend.DTOs.RoomExtendedDTO, SuperChessBackend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2023-12-27 01:13:19.158 +00:00 [INF] Executed action SuperChessBackend.Controllers.v1.RoomController.Get (SuperChessBackend) in 1250.2168ms
+2023-12-27 01:13:19.165 +00:00 [INF] Executed endpoint 'SuperChessBackend.Controllers.v1.RoomController.Get (SuperChessBackend)'
+2023-12-27 01:13:19.174 +00:00 [INF] Request finished HTTP/1.1 GET http://127.0.0.1:5555/api/v1/Room - 200 677 application/json; charset=utf-8 1445.3872ms
+2023-12-27 01:15:53.741 +00:00 [INF] Request starting HTTP/1.1 POST http://127.0.0.1:5555/api/v1/Room - application/json 18
+2023-12-27 01:15:53.771 +00:00 [INF] CORS policy execution successful.
+2023-12-27 01:15:53.789 +00:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+2023-12-27 01:15:53.797 +00:00 [INF] Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+2023-12-27 01:15:53.803 +00:00 [INF] Executing endpoint 'SuperChessBackend.Controllers.v1.RoomController.Post (SuperChessBackend)'
+2023-12-27 01:15:53.818 +00:00 [INF] Route matched with {action = "Post", controller = "Room"}. Executing controller action with signature System.Threading.Tasks.Task`1[SuperChessBackend.DTOs.RoomDTO] Post(SuperChessBackend.DTOs.RoomCreateDTO) on controller SuperChessBackend.Controllers.v1.RoomController (SuperChessBackend).
+2023-12-27 01:15:54.187 +00:00 [INF] Executed DbCommand (171ms) [Parameters=[@p0='?' (DbType = DateTime), @p1='?'], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO room ("CreationDate", "RoomName")
+VALUES (@p0, @p1)
+RETURNING "RoomId";
+2023-12-27 01:15:54.219 +00:00 [INF] Executing ObjectResult, writing value of type 'SuperChessBackend.DTOs.RoomDTO'.
+2023-12-27 01:15:54.231 +00:00 [INF] Executed action SuperChessBackend.Controllers.v1.RoomController.Post (SuperChessBackend) in 407.8598ms
+2023-12-27 01:15:54.237 +00:00 [INF] Executed endpoint 'SuperChessBackend.Controllers.v1.RoomController.Post (SuperChessBackend)'
+2023-12-27 01:15:54.244 +00:00 [INF] Request finished HTTP/1.1 POST http://127.0.0.1:5555/api/v1/Room - 200 71 application/json; charset=utf-8 505.0157ms
+2023-12-27 01:15:54.322 +00:00 [INF] Request starting HTTP/1.1 GET http://127.0.0.1:5555/api/v1/Room - null null
+2023-12-27 01:15:54.362 +00:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+2023-12-27 01:15:54.372 +00:00 [INF] Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+2023-12-27 01:15:54.376 +00:00 [INF] Executing endpoint 'SuperChessBackend.Controllers.v1.RoomController.Get (SuperChessBackend)'
+2023-12-27 01:15:54.381 +00:00 [INF] Route matched with {action = "Get", controller = "Room"}. Executing controller action with signature System.Collections.Generic.IEnumerable`1[SuperChessBackend.DTOs.RoomExtendedDTO] Get() on controller SuperChessBackend.Controllers.v1.RoomController (SuperChessBackend).
+2023-12-27 01:15:54.597 +00:00 [INF] Executed DbCommand (198ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT r."RoomId" AS "Id", r."CreationDate", r."RoomName", (
+    SELECT count(*)::int
+    FROM game AS g
+    WHERE r."RoomId" = g."RoomId") AS "AmountOfUsers"
+FROM room AS r
+2023-12-27 01:15:54.609 +00:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[SuperChessBackend.DTOs.RoomExtendedDTO, SuperChessBackend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2023-12-27 01:15:54.616 +00:00 [INF] Executed action SuperChessBackend.Controllers.v1.RoomController.Get (SuperChessBackend) in 231.8467ms
+2023-12-27 01:15:54.622 +00:00 [INF] Executed endpoint 'SuperChessBackend.Controllers.v1.RoomController.Get (SuperChessBackend)'
+2023-12-27 01:15:54.635 +00:00 [INF] Request finished HTTP/1.1 GET http://127.0.0.1:5555/api/v1/Room - 200 766 application/json; charset=utf-8 312.1984ms
+2023-12-27 01:16:06.574 +00:00 [INF] Request starting HTTP/1.1 POST http://127.0.0.1:5555/api/v1/Room - application/json 20
+2023-12-27 01:16:06.581 +00:00 [INF] CORS policy execution successful.
+2023-12-27 01:16:06.588 +00:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+2023-12-27 01:16:06.590 +00:00 [INF] Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+2023-12-27 01:16:06.595 +00:00 [INF] Executing endpoint 'SuperChessBackend.Controllers.v1.RoomController.Post (SuperChessBackend)'
+2023-12-27 01:16:06.599 +00:00 [INF] Route matched with {action = "Post", controller = "Room"}. Executing controller action with signature System.Threading.Tasks.Task`1[SuperChessBackend.DTOs.RoomDTO] Post(SuperChessBackend.DTOs.RoomCreateDTO) on controller SuperChessBackend.Controllers.v1.RoomController (SuperChessBackend).
+2023-12-27 01:16:06.762 +00:00 [INF] Executed DbCommand (150ms) [Parameters=[@p0='?' (DbType = DateTime), @p1='?'], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO room ("CreationDate", "RoomName")
+VALUES (@p0, @p1)
+RETURNING "RoomId";
+2023-12-27 01:16:06.767 +00:00 [INF] Executing ObjectResult, writing value of type 'SuperChessBackend.DTOs.RoomDTO'.
+2023-12-27 01:16:06.776 +00:00 [INF] Executed action SuperChessBackend.Controllers.v1.RoomController.Post (SuperChessBackend) in 171.9285ms
+2023-12-27 01:16:06.784 +00:00 [INF] Executed endpoint 'SuperChessBackend.Controllers.v1.RoomController.Post (SuperChessBackend)'
+2023-12-27 01:16:06.797 +00:00 [INF] Request finished HTTP/1.1 POST http://127.0.0.1:5555/api/v1/Room - 200 73 application/json; charset=utf-8 223.2862ms
+2023-12-27 01:16:06.862 +00:00 [INF] Request starting HTTP/1.1 GET http://127.0.0.1:5555/api/v1/Room - null null
+2023-12-27 01:16:06.866 +00:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+2023-12-27 01:16:06.868 +00:00 [INF] Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+2023-12-27 01:16:06.871 +00:00 [INF] Executing endpoint 'SuperChessBackend.Controllers.v1.RoomController.Get (SuperChessBackend)'
+2023-12-27 01:16:06.875 +00:00 [INF] Route matched with {action = "Get", controller = "Room"}. Executing controller action with signature System.Collections.Generic.IEnumerable`1[SuperChessBackend.DTOs.RoomExtendedDTO] Get() on controller SuperChessBackend.Controllers.v1.RoomController (SuperChessBackend).
+2023-12-27 01:16:07.026 +00:00 [INF] Executed DbCommand (142ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT r."RoomId" AS "Id", r."CreationDate", r."RoomName", (
+    SELECT count(*)::int
+    FROM game AS g
+    WHERE r."RoomId" = g."RoomId") AS "AmountOfUsers"
+FROM room AS r
+2023-12-27 01:16:07.032 +00:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[SuperChessBackend.DTOs.RoomExtendedDTO, SuperChessBackend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2023-12-27 01:16:07.037 +00:00 [INF] Executed action SuperChessBackend.Controllers.v1.RoomController.Get (SuperChessBackend) in 157.1456ms
+2023-12-27 01:16:07.045 +00:00 [INF] Executed endpoint 'SuperChessBackend.Controllers.v1.RoomController.Get (SuperChessBackend)'
+2023-12-27 01:16:07.052 +00:00 [INF] Request finished HTTP/1.1 GET http://127.0.0.1:5555/api/v1/Room - 200 857 application/json; charset=utf-8 189.6556ms
+2023-12-27 02:21:26.922 +00:00 [INF] Request starting HTTP/1.1 GET http://127.0.0.1:5555/api/v1/Room - null null
+2023-12-27 02:21:27.079 +00:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+2023-12-27 02:21:27.105 +00:00 [INF] Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+2023-12-27 02:21:27.126 +00:00 [INF] Executing endpoint 'SuperChessBackend.Controllers.v1.RoomController.Get (SuperChessBackend)'
+2023-12-27 02:21:27.151 +00:00 [INF] Route matched with {action = "Get", controller = "Room"}. Executing controller action with signature System.Collections.Generic.IEnumerable`1[SuperChessBackend.DTOs.RoomExtendedDTO] Get() on controller SuperChessBackend.Controllers.v1.RoomController (SuperChessBackend).
+2023-12-27 02:21:28.232 +00:00 [INF] Executed DbCommand (149ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT r."RoomId" AS "Id", r."CreationDate", r."RoomName", (
+    SELECT count(*)::int
+    FROM game AS g
+    WHERE r."RoomId" = g."RoomId") AS "AmountOfUsers"
+FROM room AS r
+2023-12-27 02:21:28.241 +00:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[SuperChessBackend.DTOs.RoomExtendedDTO, SuperChessBackend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2023-12-27 02:21:28.251 +00:00 [INF] Executed action SuperChessBackend.Controllers.v1.RoomController.Get (SuperChessBackend) in 1059.442ms
+2023-12-27 02:21:28.253 +00:00 [INF] Executed endpoint 'SuperChessBackend.Controllers.v1.RoomController.Get (SuperChessBackend)'
+2023-12-27 02:21:28.261 +00:00 [INF] Request finished HTTP/1.1 GET http://127.0.0.1:5555/api/v1/Room - 200 857 application/json; charset=utf-8 1353.0971ms
+2023-12-27 03:00:49.462 +00:00 [INF] Request starting HTTP/1.1 POST http://127.0.0.1:5555/api/v1/Auth/signin - application/json 36
+2023-12-27 03:00:49.509 +00:00 [INF] CORS policy execution successful.
+2023-12-27 03:00:49.522 +00:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+2023-12-27 03:00:49.529 +00:00 [INF] Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+2023-12-27 03:00:49.536 +00:00 [INF] Executing endpoint 'SuperChessBackend.Controllers.v1.AuthController.SignIn (SuperChessBackend)'
+2023-12-27 03:00:49.546 +00:00 [INF] Route matched with {action = "SignIn", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[SuperChessBackend.DTOs.UserTokensDTO] SignIn(SuperChessBackend.DTOs.UserSignInRequestDTO) on controller SuperChessBackend.Controllers.v1.AuthController (SuperChessBackend).
+2023-12-27 03:00:50.578 +00:00 [INF] Executed DbCommand (204ms) [Parameters=[@__userName_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT t."UserId", t."CreationDate", t."UserEmail", t."UserName", u0."PasswordId", u0."PasswordDate", u0."PasswordHash", u0."PasswordUserId", t0."RoleId", t0."RoleName", t0."RolesId", t0."UsersId"
+FROM (
+    SELECT u."UserId", u."CreationDate", u."UserEmail", u."UserName"
+    FROM "user" AS u
+    WHERE u."UserName" = @__userName_0
+    LIMIT 1
+) AS t
+LEFT JOIN userpassword AS u0 ON t."UserId" = u0."PasswordUserId"
+LEFT JOIN (
+    SELECT r0."RoleId", r0."RoleName", r."RolesId", r."UsersId"
+    FROM "RoleUser" AS r
+    INNER JOIN role AS r0 ON r."RolesId" = r0."RoleId"
+) AS t0 ON t."UserId" = t0."UsersId"
+ORDER BY t."UserId", u0."PasswordId", t0."RolesId", t0."UsersId"
+2023-12-27 03:00:51.059 +00:00 [INF] Executed DbCommand (140ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT u."PasswordId", u."PasswordDate", u."PasswordHash", u."PasswordUserId"
+FROM userpassword AS u
+WHERE u."PasswordUserId" = @__p_0
+ORDER BY u."PasswordDate" DESC
+LIMIT 1
+2023-12-27 03:00:51.817 +00:00 [INF] Executed DbCommand (145ms) [Parameters=[@p0='?' (DbType = DateTime), @p1='?' (DbType = DateTime), @p2='?', @p3='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO refreshtoken ("CreationDate", "ExpirationDate", "Token", "UserId")
+VALUES (@p0, @p1, @p2, @p3)
+RETURNING "RefreshTokenId";
+2023-12-27 03:00:51.829 +00:00 [INF] Executing ObjectResult, writing value of type 'SuperChessBackend.DTOs.UserTokensDTO'.
+2023-12-27 03:00:51.854 +00:00 [INF] Executed action SuperChessBackend.Controllers.v1.AuthController.SignIn (SuperChessBackend) in 2306.0494ms
+2023-12-27 03:00:51.856 +00:00 [INF] Executed endpoint 'SuperChessBackend.Controllers.v1.AuthController.SignIn (SuperChessBackend)'
+2023-12-27 03:00:51.858 +00:00 [INF] Request finished HTTP/1.1 POST http://127.0.0.1:5555/api/v1/Auth/signin - 200 653 application/json; charset=utf-8 2401.11ms
+2023-12-27 03:00:52.063 +00:00 [INF] Request starting HTTP/1.1 GET http://127.0.0.1:5555/api/v1/Room - null null
+2023-12-27 03:00:52.164 +00:00 [INF] Executing endpoint 'SuperChessBackend.Controllers.v1.RoomController.Get (SuperChessBackend)'
+2023-12-27 03:00:52.165 +00:00 [INF] Route matched with {action = "Get", controller = "Room"}. Executing controller action with signature System.Collections.Generic.IEnumerable`1[SuperChessBackend.DTOs.RoomExtendedDTO] Get() on controller SuperChessBackend.Controllers.v1.RoomController (SuperChessBackend).
+2023-12-27 03:00:52.333 +00:00 [INF] Executed DbCommand (164ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT r."RoomId" AS "Id", r."CreationDate", r."RoomName", (
+    SELECT count(*)::int
+    FROM game AS g
+    WHERE r."RoomId" = g."RoomId") AS "AmountOfUsers"
+FROM room AS r
+2023-12-27 03:00:52.334 +00:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[SuperChessBackend.DTOs.RoomExtendedDTO, SuperChessBackend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2023-12-27 03:00:52.336 +00:00 [INF] Executed action SuperChessBackend.Controllers.v1.RoomController.Get (SuperChessBackend) in 169.902ms
+2023-12-27 03:00:52.337 +00:00 [INF] Executed endpoint 'SuperChessBackend.Controllers.v1.RoomController.Get (SuperChessBackend)'
+2023-12-27 03:00:52.338 +00:00 [INF] Request finished HTTP/1.1 GET http://127.0.0.1:5555/api/v1/Room - 200 857 application/json; charset=utf-8 274.8134ms

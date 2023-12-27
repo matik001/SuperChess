@@ -56,7 +56,7 @@ const NotFoundPage: React.FC<NotFoundPageProps> = ({}) => {
 				<ImageEdgeBlur>
 					<Image src={notFoundImg}></Image>
 				</ImageEdgeBlur>
-				<Text>404 - {t('NotFound')}</Text>
+				<Text>404 - {t('Not found')}</Text>
 				<Link
 					to="/"
 					style={{
@@ -74,7 +74,7 @@ const NotFoundPage: React.FC<NotFoundPageProps> = ({}) => {
 						}}
 					>
 						<MdHome />
-						{t('BackHome')}
+						{t('Back home')}
 					</Button>
 				</Link>
 			</Container>

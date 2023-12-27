@@ -1,8 +1,8 @@
-import { Spin } from 'antd';
 import i18n from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import common_en from 'locale/en/common.json';
 import common_pl from 'locale/pl/common.json';
+import LoadingPage from 'pages/LoadingPage';
 import React, { ReactNode, useEffect, useState } from 'react';
 import { initReactI18next } from 'react-i18next';
 interface AppTranslationsProviderProps {
@@ -38,7 +38,7 @@ const AppTranslationsProvider: React.FC<AppTranslationsProviderProps> = ({ child
 	/// todo: dodac pobieranie tlumaczen z backendu tylko potrzebnych, zamiast tak jak teraz wszystkich
 	/// gdy projekt sie bardzo rozwinie i będzie wiecej plikow niz tylko common.json bedzie to mialo sens
 
-	return <>{isLoading ? <Spin /> : children}</>;
+	return <>{isLoading ? <LoadingPage /> : children}</>;
 };
 
 export default AppTranslationsProvider;

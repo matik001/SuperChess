@@ -44,6 +44,7 @@ export interface AppTheme {
 	secondaryColor: string;
 	bgColor: string;
 	textColor: string;
+	dangerColor: string;
 	isDarkMode: boolean;
 }
 declare module 'styled-components' {
@@ -58,6 +59,7 @@ const AppThemeProvider: React.FC<AppThemeProviderProps> = ({ children }) => {
 		secondaryColor: '#262421',
 		textColor: 'white',
 		bgColor: '#161513',
+		dangerColor: '#e13f3a',
 		isDarkMode: true
 	};
 	const themeLight: AppTheme = {
@@ -65,6 +67,7 @@ const AppThemeProvider: React.FC<AppThemeProviderProps> = ({ children }) => {
 		secondaryColor: 'white',
 		bgColor: '#ecebe9',
 		textColor: 'black',
+		dangerColor: '#e13f3a',
 		isDarkMode: false
 	};
 	const theme = isDarkMode ? themeDark : themeLight;

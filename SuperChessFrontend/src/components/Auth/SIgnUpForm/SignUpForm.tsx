@@ -1,5 +1,5 @@
 import { Button, Spin } from 'antd';
-import ValidatedInput from 'components/UI/ValidatedInput';
+import ValidatedInput from 'components/UI/ValidatedInput/ValidatedInput';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -64,7 +64,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({}) => {
 						}}
 					/>
 
-					<div style={{ marginBottom: '9px' }}>{t('Username')}: </div>
+					<div style={{ marginBottom: '9px' }}>{t('User name')}: </div>
 					<ValidatedInput
 						control={control}
 						name="Username"

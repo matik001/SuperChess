@@ -15,7 +15,7 @@ namespace SuperChessBackend.DB.Repositories
         [Key]
         [Column("RoomId")]
         public int Id { get; set; }
-        public Guid RoomName { get; set; }
+        public string RoomName { get; set; }
         public DateTime CreationDate { get; set; }
 
         public virtual ICollection<Game> Games { get; set; }

@@ -6,22 +6,23 @@ import {
 	signin,
 	signup
 } from 'api/authApi';
-import { useInterval } from 'usehooks-ts';
 import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
 export interface AuthState {
 	tokens?: UserTokensDTO;
 	isLoading: boolean;
+	error?: Error;
+
+	wasHydrated: boolean;
 }
 export interface AuthActions {
-	updateTokens: (tokens?: UserTokensDTO) => void;
-	setLoading: (isLoading: boolean) => void;
 	refreshToken: () => Promise<boolean>;
 	signup: (signupData: UserSignUpRequestDTO) => Promise<UserTokensDTO>;
 	signin: (signinData: UserSignInRequestDTO) => Promise<UserTokensDTO>;
 	logout: () => Promise<void>;
 }
+
 const StoreName = 'AuthStore';
 const useAuthStore = create<AuthState & AuthActions>()(
 	persist(
@@ -31,18 +32,8 @@ const useAuthStore = create<AuthState & AuthActions>()(
 					({
 						tokens: undefined,
 						isLoading: false,
+						wasHydrated: false,
 
-						updateTokens: (tokens) => {
-							set({
-								tokens: tokens,
-								isLoading: false
-							});
-						},
-						setLoading: (isLoading) => {
-							set({
-								isLoading: isLoading
-							});
-						},
 						refreshToken: async () => {
 							console.log('refreshing token');
 
@@ -51,46 +42,86 @@ const useAuthStore = create<AuthState & AuthActions>()(
 							if (tokens.refreshTokenExpiration < new Date()) {
 								set({
 									isLoading: false,
-									tokens: undefined
+									tokens: undefined,
+									error: undefined
 								});
 								return;
 							}
 							// set({
 							// 	isLoading: true
 							// });
-							const newTokens = await refreshToken({
-								refreshToken: tokens.refreshToken,
-								token: tokens.token
-							});
-							set({
-								isLoading: false,
-								tokens: newTokens
-							});
+							try {
+								const newTokens = await refreshToken({
+									refreshToken: tokens.refreshToken,
+									token: tokens.token
+								});
+								set({
+									isLoading: false,
+									tokens: newTokens,
+									error: undefined
+								});
+							} catch (error) {
+								set({
+									isLoading: false,
+									tokens: undefined,
+									error: error as Error
+								});
+							}
+
 							return true;
 						},
 						logout: async () => {
 							set({
 								isLoading: false,
-								tokens: undefined
+								tokens: undefined,
+								error: undefined
 							});
 						},
 						signin: async (signinData) => {
-							set({ isLoading: true });
-							const tokens = await signin(signinData);
-							set({
-								isLoading: false,
-								tokens: tokens
-							});
-							return tokens;
+							let newTokens: UserTokensDTO | undefined = undefined;
+							try {
+								set({
+									isLoading: true,
+									error: undefined
+								});
+								newTokens = await signin(signinData);
+								set({
+									isLoading: false,
+									tokens: newTokens,
+									error: undefined
+								});
+							} catch (error) {
+								set({
+									isLoading: false,
+									tokens: undefined,
+									error: error as Error
+								});
+							}
+
+							return newTokens;
 						},
 						signup: async (signupData) => {
-							set({ isLoading: true });
-							const tokens = await signup(signupData);
-							set({
-								isLoading: false,
-								tokens: tokens
-							});
-							return tokens;
+							let newTokens: UserTokensDTO | undefined = undefined;
+							try {
+								set({
+									isLoading: true,
+									error: undefined
+								});
+								newTokens = await signup(signupData);
+								set({
+									isLoading: false,
+									tokens: newTokens,
+									error: undefined
+								});
+							} catch (error) {
+								set({
+									isLoading: false,
+									tokens: undefined,
+									error: error as Error
+								});
+							}
+
+							return newTokens;
 						}
 					}) as AuthState & AuthActions,
 				{ name: StoreName, store: StoreName }
@@ -98,9 +129,14 @@ const useAuthStore = create<AuthState & AuthActions>()(
 		),
 		{
 			name: StoreName,
-			onRehydrateStorage: (state) => (state) => {
-				useAuthStore.getState().refreshToken();
-				useInterval(() => useAuthStore.getState().refreshToken(), 300); /// refresh token every 5 min
+			onRehydrateStorage: (state) => async (state) => {
+				setTimeout(async () => {
+					await state!.refreshToken();
+					useAuthStore.setState({
+						wasHydrated: true
+					});
+					setInterval(() => useAuthStore.getState().refreshToken(), 300000); /// refresh token every 5 min
+				}, 0);
 			},
 			partialize: (state) => ({
 				tokens: state.tokens

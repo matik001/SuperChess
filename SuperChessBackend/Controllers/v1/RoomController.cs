@@ -30,41 +30,71 @@ namespace SuperChessBackend.Controllers.v1
         }
 
         // GET: api/<GameController>
-        //[HttpGet]
-        //public IEnumerable<string> Get()
-        //{
-        //    var rooms = uow.RoomRepository.GetAll().Select(room => new
-        //    {
-        //        room = room,
-        //        gamesCount = room.Games.Count() /// EF is smart and it should be performent
-        //    }).ToList();
-        //    mapper.
-
-        //}
+        [HttpGet]
+        [AllowAnonymous]
+        public IEnumerable<RoomExtendedDTO> Get()
+        {
+            var rooms = uow.RoomRepository.GetAll().Select(room => new RoomExtendedDTO()
+            {
+                Id = room.Id,
+                CreationDate = room.CreationDate,
+                RoomName = room.RoomName,
+                AmountOfUsers = room.Games.Count() /// EF is smart and it should be performent
+            }).ToList();
+            return rooms;
+        }
 
         // GET api/<GameController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        [AllowAnonymous]
+        public RoomExtendedDTO Get(int id)
         {
-            return "value";
+            var room = uow.RoomRepository.GetAll().Where(a=>a.Id == id).Select(room => new RoomExtendedDTO()
+            {
+                Id = room.Id,
+                CreationDate = room.CreationDate,
+                RoomName = room.RoomName,
+                AmountOfUsers = room.Games.Count() /// EF is smart and it should be performent
+            }).FirstOrDefault();
+
+            return room;
         }
 
         // POST api/<GameController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        [AllowAnonymous]
+        public async Task<RoomDTO> Post([FromBody] RoomCreateDTO room)
         {
+            var newRoom = new Room()
+            {
+                RoomName = room.RoomName,
+                CreationDate = DateTime.UtcNow
+            };
+            await uow.RoomRepository.Create(newRoom);
+            await uow.SaveChangesAsync();
+            var roomDto = mapper.Map<RoomDTO>(newRoom);
+            return roomDto;
         }
 
         // PUT api/<GameController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task Put(int id, [FromBody] RoomDTO room)
         {
+            await uow.RoomRepository.Update(new Room()
+            {
+                Id = id,
+                RoomName = room.RoomName,
+                CreationDate = DateTime.UtcNow
+            });
+            await uow.SaveChangesAsync();
         }
 
         // DELETE api/<GameController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
+            await uow.RoomRepository.Delete(id);
+            await uow.SaveChangesAsync();
         }
 
     }

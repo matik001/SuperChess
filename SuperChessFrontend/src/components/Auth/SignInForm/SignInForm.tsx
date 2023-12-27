@@ -1,11 +1,11 @@
 import { Button, Spin } from 'antd';
-import ValidatedInput from 'components/UI/ValidatedInput';
+import ValidatedInput from 'components/UI/ValidatedInput/ValidatedInput';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import useAuthStore from 'store/authStore';
-import { styled } from 'styled-components';
+import { styled, useTheme } from 'styled-components';
 
 interface SignInFormProps {}
 
@@ -28,6 +28,7 @@ interface FormData {
 const SignInForm: React.FC<SignInFormProps> = ({}) => {
 	const signin = useAuthStore((a) => a.signin);
 	const isLoading = useAuthStore((a) => a.isLoading);
+	const authError = useAuthStore((a) => a.error);
 
 	const {
 		handleSubmit,
@@ -42,12 +43,13 @@ const SignInForm: React.FC<SignInFormProps> = ({}) => {
 	};
 	const { t } = useTranslation();
 	const navigate = useNavigate();
+	const theme = useTheme();
 	return (
 		<LoginPanel>
 			<Spin spinning={isLoading}>
 				<Title>{t('Sign in')}</Title>
 				<form onSubmit={handleSubmit(onSubmit)}>
-					<div style={{ marginBottom: '9px' }}>{t('Username')}: </div>
+					<div style={{ marginBottom: '9px' }}>{t('User name')}: </div>
 					<ValidatedInput
 						control={control}
 						name="Username"
@@ -59,17 +61,23 @@ const SignInForm: React.FC<SignInFormProps> = ({}) => {
 					<ValidatedInput
 						control={control}
 						name="Password"
-						style={{ marginBottom: '24px' }}
+						style={{ marginBottom: '0px' }}
 						rules={{}}
 						isPassword
 					/>
-
-					<Button type="primary" htmlType="submit">
-						{t('Sign in')}
-					</Button>
-					<Button type="link" onClick={() => navigate('/signup')}>
-						{t('Dont have account? Sign up.')}
-					</Button>
+					{authError && (
+						<div style={{ color: theme.dangerColor, marginTop: '10px' }}>
+							{t('Wrong username or password')}
+						</div>
+					)}
+					<div style={{ marginTop: '24px' }}>
+						<Button type="primary" htmlType="submit">
+							{t('Sign in')}
+						</Button>
+						<Button type="link" onClick={() => navigate('/signup')}>
+							{t('Dont have account? Sign up.')}
+						</Button>
+					</div>
 				</form>
 			</Spin>
 		</LoginPanel>

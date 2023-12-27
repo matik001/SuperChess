@@ -12,7 +12,7 @@ const Container = styled.div`
 const LoadingPage = () => {
 	return (
 		<Container>
-			<Spin />
+			<Spin fullscreen />
 		</Container>
 	);
 };

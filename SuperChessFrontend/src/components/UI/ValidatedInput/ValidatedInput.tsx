@@ -7,7 +7,7 @@ export interface ValidatedInputProps<T extends FieldValues> {
 	// errors: FieldErrors<FieldValues>;
 	control: Control<T, any>;
 	rules: RulesType;
-	style: CSSProperties;
+	style?: CSSProperties;
 	isPassword?: boolean;
 }
 

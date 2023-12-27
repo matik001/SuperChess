@@ -58,6 +58,9 @@ dependencies:
   styled-components:
     specifier: ^6.1.3
     version: 6.1.3(react-dom@18.2.0)(react@18.2.0)
+  super-chess-frontend:
+    specifier: 'link:'
+    version: 'link:'
   usehooks-ts:
     specifier: ^2.9.1
     version: 2.9.1(react-dom@18.2.0)(react@18.2.0)

@@ -10,23 +10,35 @@ namespace SuperChessBackend.DB.Repositories
     public enum GameState {
         NotStarted, 
         InProgress, 
-        WaitingForMissingPlayer, 
+        WaitingForMissingPlayer, /// when one player left the game
         Finished, 
         Aborted
     }
 
     public enum GameType {
-        ClassicChess
+        Chess
     }
 
     public enum ChessGameResult
     {
         WinWhite, WinBlack, Draw
     }
+
+    public enum PlayerColors
+    {
+        White, Black
+            /// If you add more games, you can add more colors here
+    }
     public class ChessData
     {
         public string PositionPgn{ get; set; }
         public ChessGameResult? Result { get; set; }
+
+        public ChessData()
+        {
+            PositionPgn = "";
+            Result = null;
+        }
     }
 
     [Table("game")]
@@ -73,7 +85,7 @@ namespace SuperChessBackend.DB.Repositories
         public int? RoomId { get; set; }
         public virtual Room? Room { get; set; }
 
-        public virtual ICollection<UserGame> UserGame { get; set; }
+        public virtual ICollection<UserGame> UserGames { get; set; }
         public virtual ICollection<User> Users { get; set; }
     }
     public interface IGameRepository : IGenericRepository<Game>

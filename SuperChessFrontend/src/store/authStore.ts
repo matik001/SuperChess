@@ -35,8 +35,6 @@ const useAuthStore = create<AuthState & AuthActions>()(
 						wasHydrated: false,
 
 						refreshToken: async () => {
-							console.log('refreshing token');
-
 							const tokens = get().tokens;
 							if (!tokens) return;
 							if (tokens.refreshTokenExpiration < new Date()) {

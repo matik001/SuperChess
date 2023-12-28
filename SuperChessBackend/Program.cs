@@ -6,8 +6,10 @@ using Microsoft.IdentityModel.Tokens;
 using Serilog;
 using SuperChessBackend.Configuration;
 using SuperChessBackend.DB;
+using SuperChessBackend.Hubs;
 using SuperChessBackend.Services;
 using System.Text;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseSerilog((context, loggerConfiguration) => loggerConfiguration
@@ -24,6 +26,14 @@ services.AddEndpointsApiExplorer();
 services.AddSwaggerGen();
 services.ConfigureJWT(builder.Configuration);
 services.ConfigureCORS(builder.Configuration);
+services.AddSignalR()
+        .AddJsonProtocol(options =>
+        {
+            options.PayloadSerializerOptions.Converters
+               .Add(new JsonStringEnumConverter());
+        });
+;
+services.AddScoped<IGamesHubService, GamesHubService>();
 
 //AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 services.AddDbContext<AppDBContext>(options =>
@@ -54,6 +64,8 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers().RequireAuthorization();
+app.MapHub<GamesHub>("/hub/games");
+
 app.ConfigureExceptionHandler(builder.Configuration, app.Logger);
 
 app.Run();

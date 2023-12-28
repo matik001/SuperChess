@@ -4,6 +4,7 @@ import { ScrollableMixin } from 'components/UI/Scrollable/Scrollable';
 import Spinner from 'components/UI/Spinners/Spinner';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 import useAuthStore from 'store/authStore';
 import { styled } from 'styled-components';
 import RoomItem from './RoomItem/RoomItem';
@@ -30,6 +31,7 @@ const RoomsList: React.FC<RoomsListProps> = ({}) => {
 			return getRooms(signal);
 		}
 	});
+	const navigate = useNavigate();
 	const { t } = useTranslation();
 	const queryClient = useQueryClient();
 	const addRoomMutation = useMutation({
@@ -47,7 +49,17 @@ const RoomsList: React.FC<RoomsListProps> = ({}) => {
 	});
 	return (
 		<Container>
-			{rooms && rooms.map((room) => <RoomItem mode="room" room={room} key={room.id} />)}
+			{rooms &&
+				rooms.map((room) => (
+					<RoomItem
+						mode="room"
+						room={room}
+						key={room.id}
+						onClick={() => {
+							navigate(`/rooms/${room.id}`);
+						}}
+					/>
+				))}
 
 			<RoomItem mode="insert" onCreate={addRoomMutation.mutate} />
 			{isFetching || addRoomMutation.isPending ? <Spinner /> : null}

@@ -1,6 +1,6 @@
 import LogoImageSrc from 'assets/logo.png?url';
 import TopMenu from 'components/TopMenu/TopMenu';
-import { ReactNode } from 'react';
+import { CSSProperties, ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 const Title = styled.h1`
@@ -13,6 +13,7 @@ const Title = styled.h1`
 
 interface MainTemplatePageProps {
 	children: ReactNode;
+	style?: CSSProperties;
 }
 const Layout = styled.div`
 	height: 100vh;
@@ -30,7 +31,7 @@ const MenuRow = styled.div`
 	background-color: ${(props) => props.theme.secondaryColor};
 	width: 100%;
 `;
-const MainTemplatePage = ({ children }: MainTemplatePageProps) => {
+const MainTemplatePage = ({ children, style }: MainTemplatePageProps) => {
 	const { t } = useTranslation();
 	return (
 		<Layout>
@@ -46,7 +47,8 @@ const MainTemplatePage = ({ children }: MainTemplatePageProps) => {
 					position: 'relative',
 					width: '100%',
 					flexGrow: '1',
-					minHeight: 0
+					minHeight: 0,
+					...style
 				}}
 			>
 				{children}

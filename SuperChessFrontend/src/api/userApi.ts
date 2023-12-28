@@ -7,7 +7,6 @@ export interface UserDTO {
 	userName: string;
 	userEmail: string;
 	creationDate: Date;
-	roles: RoleDTO[];
 }
 
 // export const QUERYKEY_GETUSER = 'QUERYKEY_GETCURRENTUSER';

@@ -36,5 +36,12 @@
 	"Change": "Zmień",
 	"Games history": "Historia gier",
 	"You must <0>sign in</0> to keep your games history.": "Musisz się <0>zalogować</0>, aby zachować historię gier.",
-	"Save": "Zapisz"
+	"Save": "Zapisz",
+	"Cannot connect to signalr hub": "Nie udało połączyć się do huba signalr",
+	"Click to join": "Kliknij aby dołączyć",
+	"Disconnected from sever": "Rozłaczono z serwerem",
+	"Connected to server": "Podłączono do serwera",
+	"Connecting to server": "Łaczenie z serwerem",
+	"Waiting for a player": "Oczekiwanie na gracza",
+	"Create new game": "Utwórz nową grę"
 }

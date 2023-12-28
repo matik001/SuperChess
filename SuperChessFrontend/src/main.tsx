@@ -5,6 +5,7 @@ import ReactDOM from 'react-dom/client';
 import { ErrorBoundary } from 'react-error-boundary';
 import 'react-toastify/dist/ReactToastify.css';
 import AppAuthProvider from 'setup/AppAuthProvider';
+import ServerConnectionNotifier from 'setup/ServerConnectionNotifier';
 import ToastsPlaceholder from 'setup/ToastsPlaceholder';
 import GlobalErrorInfo from './components/Error/GlobalErrorInfo';
 import './index.css';
@@ -35,6 +36,7 @@ const init = async () => {
 								<AppAuthProvider>
 									<Router />
 									<ReactQueryDevtools initialIsOpen={false} />
+									<ServerConnectionNotifier />
 								</AppAuthProvider>
 							</ErrorBoundary>
 							<ToastsPlaceholder />

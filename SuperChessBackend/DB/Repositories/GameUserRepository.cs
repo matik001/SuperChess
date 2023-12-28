@@ -13,16 +13,16 @@ namespace SuperChessBackend.DB.Repositories
         [Column("UserGameId")]
         public int Id { get; set; }
 
-        public string Color { get; set; } /// may be something more than just "white" or "black"
+        public PlayerColors Color { get; set; }
+        public string Nick { get; set; }
 
         [ForeignKey("User")]
-        public int UserId { get; set; }
-        public virtual User User { get; set; }
+        public int? UserId { get; set; }
+        public virtual User? User { get; set; }
 
         [ForeignKey("Game")]
         public int GameId { get; set; }
         public virtual Game Game { get; set; }
-
     }
     public interface IUserGameRepository : IGenericRepository<UserGame>
     {

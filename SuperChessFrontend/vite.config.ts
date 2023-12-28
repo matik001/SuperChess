@@ -16,6 +16,11 @@ export default defineConfig({
 			'/api': {
 				target: 'http://127.0.0.1:5555',
 				changeOrigin: true
+			},
+			'/hub': {
+				target: 'http://127.0.0.1:5555',
+				changeOrigin: true,
+				ws: true
 			}
 		}
 	}

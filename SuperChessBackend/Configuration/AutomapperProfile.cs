@@ -12,6 +12,8 @@ namespace SuperChessBackend.Configuration
             CreateMap<Role, RoleDTO>().ReverseMap();
             CreateMap<User, UserDTO>().ReverseMap();
             CreateMap<Room, RoomDTO>().ReverseMap();
+            CreateMap<Game, GameDTO>().ReverseMap();
+            CreateMap<UserGame, UserGameDTO>().ReverseMap();
 
             //CreateMap<User, UserLoginResponseDTO>()
             //    .ForMember(a => a.userId,

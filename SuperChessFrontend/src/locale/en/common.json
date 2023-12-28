@@ -35,5 +35,12 @@
 	"Change": "Change",
 	"Games history": "Games history",
 	"You must <0>sign in</0> to keep your games history.": "You must <0>sign in</0> to keep your games history.",
-	"Save": "Save"
+	"Save": "Save",
+	"Cannot connect to signalr hub": "Cannot connect to signalr hub",
+	"Click to join": "Click to join",
+	"Disconnected from sever": "Disconnected from sever",
+	"Connected to server": "Connected to server",
+	"Connecting to server": "Connecting to server",
+	"Waiting for a player": "Waiting for a player",
+	"Create new game": "Create new game"
 }

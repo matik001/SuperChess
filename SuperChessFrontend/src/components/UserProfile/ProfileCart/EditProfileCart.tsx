@@ -22,6 +22,9 @@ const EditProfileCart: React.FC<EditProfileCartProps> = ({}) => {
 	return (
 		<>
 			<Card
+				style={{
+					minWidth: '400px'
+				}}
 				title={t('Your profile')}
 				extra={
 					<>

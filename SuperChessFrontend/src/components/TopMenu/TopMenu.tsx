@@ -97,7 +97,7 @@ const TopMenu: React.FC<TopMenuProps> = ({}) => {
 					i18n.changeLanguage(i18n.language === 'pl' ? 'en' : 'pl');
 				}}
 			>
-				{i18n.language === 'pl' ? 'PL' : 'ENG'}
+				{i18n.languages[0] === 'pl' ? 'PL' : 'ENG'}
 			</Button>
 			<ThemeSwitch
 				checked={isDarkMode}

@@ -1,9 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { FloatButton } from 'antd';
 import { QUERYKEY_GETROOMS, createRoom, getRooms } from 'api/roomApi';
 import { ScrollableMixin } from 'components/UI/Scrollable/Scrollable';
 import Spinner from 'components/UI/Spinners/Spinner';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { MdOutlineRefresh } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
 import useAuthStore from 'store/authStore';
 import { styled } from 'styled-components';
@@ -25,7 +27,11 @@ const Container = styled.div`
 
 const RoomsList: React.FC<RoomsListProps> = ({}) => {
 	const user = useAuthStore((a) => a.tokens?.user);
-	const { data: rooms, isFetching } = useQuery({
+	const {
+		data: rooms,
+		isFetching,
+		refetch
+	} = useQuery({
 		queryKey: [QUERYKEY_GETROOMS],
 		queryFn: ({ signal }) => {
 			return getRooms(signal);
@@ -49,6 +55,8 @@ const RoomsList: React.FC<RoomsListProps> = ({}) => {
 	});
 	return (
 		<Container>
+			<RoomItem mode="insert" onCreate={addRoomMutation.mutate} />
+
 			{rooms &&
 				rooms.map((room) => (
 					<RoomItem
@@ -61,8 +69,8 @@ const RoomsList: React.FC<RoomsListProps> = ({}) => {
 					/>
 				))}
 
-			<RoomItem mode="insert" onCreate={addRoomMutation.mutate} />
 			{isFetching || addRoomMutation.isPending ? <Spinner /> : null}
+			{!isFetching && <FloatButton icon={<MdOutlineRefresh />} onClick={() => refetch()} />}
 		</Container>
 	);
 };

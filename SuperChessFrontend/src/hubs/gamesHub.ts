@@ -1,40 +1,13 @@
 import * as signalR from '@microsoft/signalr';
 import { HubConnectionState } from '@microsoft/signalr';
-import { UserDTO } from 'api/userApi';
+import { GameDTO, GameType } from 'api/gameApi';
+import { PieceSymbol } from 'chess.js';
 import i18next from 'i18next';
 import { atom, useAtom } from 'jotai';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import useAuthStore from 'store/authStore';
 
-type GameState = 'NotStarted' | 'InProgress' | 'WaitingForMissingPlayer' | 'Finished' | 'Aborted';
-
-type GameType = 'Chess';
-
-type ChessGameResult = 'WinWhite' | 'WinBlack' | 'Draw';
-
-type PlayerColors = 'White' | 'Black';
-/// If you add more games, you can add more colors here
-interface ChessData {
-	positionPgn: string;
-	result?: ChessGameResult;
-}
-interface UserGameDTO {
-	id: number;
-	color: PlayerColors;
-	nick: string;
-	user: UserDTO;
-	gameId: number;
-}
-export interface GameDTO {
-	gameGuid: string;
-	creationDate: Date;
-	gameStatus: GameState;
-	gameType: GameType;
-	chessData: ChessData;
-	roomId: number;
-	userGames: UserGameDTO[];
-}
 const connection = new signalR.HubConnectionBuilder()
 	.withUrl('/hub/games', {
 		accessTokenFactory: () => useAuthStore.getState().tokens?.token ?? ''
@@ -45,25 +18,89 @@ const connection = new signalR.HubConnectionBuilder()
 // neccessary line for enabling duplex communication (it must execute be before start function)
 connection.on('anything', () => {});
 
-const useSignalrObj = <T>(methodName: string) => {
-	const [obj, setObj] = useState<T>();
+const useReceiveObj = <T>(methodName: string, onReceive: (obj: T) => void) => {
 	useEffect(() => {
 		const onReceivedObj = (data: T) => {
-			setObj(data);
+			onReceive(data);
 		};
 		connection.on(methodName, onReceivedObj);
 		return () => {
 			connection.off(methodName, onReceivedObj);
 		};
-	}, [methodName]);
+	}, [methodName, onReceive]);
+};
+const useObject = <T>(methodName: string, filter?: (obj: T) => boolean) => {
+	const [obj, setObj] = useState<T>();
+	const onReceive = useCallback(
+		(obj: T) => {
+			if (filter && !filter(obj)) return;
+			setObj(obj);
+		},
+		[filter]
+	);
+	useReceiveObj(methodName, onReceive);
 
-	return obj;
+	return [obj, setObj] as [typeof obj, typeof setObj];
+};
+const useGame = (gameGuid: string) => {
+	return useObject<GameDTO>('UpdateGame', (g) => g.gameGuid === gameGuid);
 };
 const useGames = () => {
-	return useSignalrObj<GameDTO[]>('UpdateGamesInRoom');
+	const [games, setGames] = useObject<GameDTO[]>('UpdateGamesInRoom');
+	useReceiveObj<GameDTO>('UpdateGame', (game) => {
+		if (games && game) {
+			const newGames = games.map((a) => (a.gameGuid === game.gameGuid ? game : a));
+			setGames(newGames);
+		}
+	});
+	return [games, setGames] as [typeof games, typeof setGames];
 };
-const createGame = async (roomId: number, gameType: GameType, nick: string) => {
-	await connection.send('CreateGame', roomId, gameType, nick);
+
+export interface Position {
+	x: number;
+	y: number;
+}
+export type PieceType = 'None' | 'Pawn' | 'Knight' | 'Bishop' | 'Rook' | 'Queen' | 'King';
+export const positionFromString = (chessPos: string) => {
+	/// a8->0,7
+	return {
+		x: chessPos.charCodeAt(0) - 'a'.charCodeAt(0),
+		y: parseInt(chessPos.charAt(1)) - 1
+	} as Position;
+};
+export const pieceSymbolToType = (symbol: PieceSymbol) => {
+	return (
+		{
+			b: 'Bishop',
+			p: 'Pawn',
+			n: 'Knight',
+			k: 'King',
+			r: 'Rook',
+			q: 'Queen'
+		} as Record<PieceSymbol, PieceType>
+	)[symbol];
+};
+export interface Move {
+	from: Position;
+	to: Position;
+	promotion?: PieceType;
+}
+/// TODO someone else can send our move when we are guest - security issue
+const makeMove = async (guestGuid: string | undefined, gameGuid: string, move: Move) => {
+	await connection.send('MakeMove', guestGuid, gameGuid, move);
+};
+const joinGame = async (guestGuid: string | undefined, nick: string, gameGuid: string) => {
+	await connection.send('JoinGame', guestGuid, nick, gameGuid);
+};
+
+// returns new game's guid
+const createGame = async (
+	guestGuid: string | undefined,
+	nick: string,
+	roomId: number,
+	gameType: GameType
+) => {
+	return await connection.invoke<string>('CreateGame', guestGuid, nick, roomId, gameType);
 };
 const joinRoom = async (roomId: number) => {
 	await connection.send('JoinRoom', roomId);
@@ -113,6 +150,9 @@ export const useGamesHub = () => {
 		joinRoom,
 		leaveRoom,
 		useGames,
-		createGame
+		useGame,
+		createGame,
+		joinGame,
+		makeMove
 	};
 };

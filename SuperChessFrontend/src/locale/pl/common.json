@@ -42,6 +42,12 @@
 	"Disconnected from sever": "Rozłaczono z serwerem",
 	"Connected to server": "Podłączono do serwera",
 	"Connecting to server": "Łaczenie z serwerem",
-	"Waiting for a player": "Oczekiwanie na gracza",
-	"Create new game": "Utwórz nową grę"
+	"Waiting for an opponent": "Oczekiwanie na przeciwnika",
+	"Create new game": "Utwórz nową grę",
+	"Black on move": "Czarny na posunięciu",
+	"White on move": "Biały na posunięciu",
+	"White won": "Wygrał biały",
+	"Black won": "Wygrał czarny",
+	"Draw": "Remis",
+	"Yours games history is empty": "Twoja historia gier jest pusta"
 }

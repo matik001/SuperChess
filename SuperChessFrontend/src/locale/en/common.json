@@ -41,6 +41,12 @@
 	"Disconnected from sever": "Disconnected from sever",
 	"Connected to server": "Connected to server",
 	"Connecting to server": "Connecting to server",
-	"Waiting for a player": "Waiting for a player",
-	"Create new game": "Create new game"
+	"Waiting for an opponent": "Waiting for an opponent",
+	"Create new game": "Create new game",
+	"Black on move": "Black on move",
+	"White on move": "White on move",
+	"White won": "White won",
+	"Black won": "Black won",
+	"Draw": "Draw",
+	"Yours games history is empty": "Your's games history is empty"
 }

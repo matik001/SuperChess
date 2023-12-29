@@ -3,6 +3,7 @@ import Spinner from 'components/UI/Spinners/Spinner';
 import { useGamesHub } from 'hubs/gamesHub';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 import useUserStore from 'store/userStore';
 import { styled } from 'styled-components';
 import GameItem from './GameItem/GameItem';
@@ -20,18 +21,38 @@ const Container = styled.div`
 `;
 const GamesList: React.FC<GamesListProps> = ({ roomId }) => {
 	const { useGames, createGame, isConnected } = useGamesHub();
-	const games = useGames();
+	const [games, setGames] = useGames();
 	const nick = useUserStore((a) => a.nick);
+	const user = useUserStore((a) => a.user);
+	const guestGuid = useUserStore((a) => a.guestGuid);
 	const { t } = useTranslation();
+	const navigate = useNavigate();
+	const onCreateGame = async () => {
+		const guid = await createGame(guestGuid, nick, roomId, 'Chess');
+		navigate(`/game/${guid}`);
+	};
 	return (
 		<>
-			{/* <h3>Room id: {roomId}</h3> */}
 			{!isConnected && <Spinner tip={t('Connecting to server')} />}
 			<Container>
-				<GameItemNew onClick={() => createGame(roomId, 'Chess', nick)} />
+				<GameItemNew onClick={onCreateGame} />
 				{games &&
 					games.map((game) => {
-						return <GameItem key={game.gameGuid} game={game} onClick={(game) => {}} />;
+						const areYouInGame = game.userGames.some(
+							(a) =>
+								(guestGuid && a.guestGuid === guestGuid) || (a.user?.id && a.user?.id === user?.id)
+						);
+						return (
+							<GameItem
+								key={game.gameGuid}
+								game={game}
+								// canJoin={!areYouInGame}
+								canJoin={true}
+								onClick={(game) => {
+									navigate(`/game/${game.gameGuid}`);
+								}}
+							/>
+						);
 					})}
 			</Container>
 		</>

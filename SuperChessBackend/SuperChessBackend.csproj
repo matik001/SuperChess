@@ -37,4 +37,10 @@
     <Folder Include="Migrations\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="Rudzoft.ChessLib">
+      <HintPath>Rudzoft.ChessLib.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

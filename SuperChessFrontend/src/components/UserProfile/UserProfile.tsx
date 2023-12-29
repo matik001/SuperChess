@@ -6,9 +6,9 @@ import EditProfileCart from './ProfileCart/EditProfileCart';
 export const Container = styled.div`
 	display: flex;
 	flex-direction: row;
-	height: calc(100% - 100px);
-	margin: 50px;
-	gap: 30px;
+	height: calc(100% - 40px);
+	margin: 20px 50px;
+	gap: 20px;
 `;
 export interface UserProfileProps {}
 

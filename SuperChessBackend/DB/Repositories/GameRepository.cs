@@ -1,5 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Linq;
+using SuperChessBackend.DTOs;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -7,15 +9,17 @@ using System.Reflection.Metadata;
 
 namespace SuperChessBackend.DB.Repositories
 {
-    public enum GameState {
-        NotStarted, 
-        InProgress, 
+    public enum GameState
+    {
+        NotStarted,
+        InProgress,
         WaitingForMissingPlayer, /// when one player left the game
-        Finished, 
+        Finished,
         Aborted
     }
 
-    public enum GameType {
+    public enum GameType
+    {
         Chess
     }
 
@@ -27,20 +31,21 @@ namespace SuperChessBackend.DB.Repositories
     public enum PlayerColors
     {
         White, Black
-            /// If you add more games, you can add more colors here
+        /// If you add more games, you can add more colors here
     }
     public class ChessData
     {
-        public string PositionPgn{ get; set; }
+        public string PositionFEN { get; set; }
         public ChessGameResult? Result { get; set; }
-
+        public static readonly string START_FEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
         public ChessData()
         {
-            PositionPgn = "";
+            PositionFEN = START_FEN;
             Result = null;
         }
     }
 
+    /// it may be more efficient to store games history in another table
     [Table("game")]
     public class Game : IEntity
     {
@@ -77,7 +82,7 @@ namespace SuperChessBackend.DB.Repositories
             set
             {
                 GameData = JObject.FromObject(value).ToString();
-                _chessData = value; 
+                _chessData = value;
             }
         }
 
@@ -90,11 +95,47 @@ namespace SuperChessBackend.DB.Repositories
     }
     public interface IGameRepository : IGenericRepository<Game>
     {
+        IEnumerable<Game> GetGamesInRoom(int roomId);
+        Game? GetGameByGuid(string gameGuid);
+        IEnumerable<Game> GetUserGames(int userId);
+
     }
     public class GameRepository : GenericRepository<Game>, IGameRepository
     {
         public GameRepository(AppDBContext dbContext) : base(dbContext)
         {
+        }
+
+        public IEnumerable<Game> GetGamesInRoom(int roomId)
+        {
+            return GetAll()
+                    .Include(game => game.UserGames)
+                    .ThenInclude(userGame => userGame.User)
+                    .Where(game => game.RoomId == roomId && (game.GameStatus == GameState.NotStarted || game.GameStatus == GameState.InProgress))
+                    .OrderByDescending(game => game.CreationDate)
+                    .ToList();
+        }
+
+
+        Game? IGameRepository.GetGameByGuid(string gameGuid)
+        {
+            return GetAll()
+                    .Include(game => game.UserGames)
+                    .ThenInclude(userGame => userGame.User)
+                    .Where(game => game.GameGuid == new Guid(gameGuid))
+                    .FirstOrDefault();
+        }
+
+      
+
+        IEnumerable<Game> IGameRepository.GetUserGames(int userId)
+        {
+            return GetAll()
+                    .Include(game => game.UserGames)
+                    .ThenInclude(userGame => userGame.User)
+                    .Where(game => game.UserGames.Any(a => a.UserId == userId))
+                    .OrderByDescending(game => game.CreationDate)
+                    .ToList();
         }
     }
 }

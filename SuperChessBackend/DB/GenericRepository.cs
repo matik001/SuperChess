@@ -60,7 +60,8 @@ namespace SuperChessBackend.DB
 
         public async Task Update(TEntity entity)
         {
-            _dbContext.Entry(entity).State = EntityState.Modified;
+            _dbContext.Update(entity);
+            //_dbContext.Entry(entity).State = EntityState.Modified;
         }
     }
 }

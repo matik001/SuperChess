@@ -1,4 +1,5 @@
 // import ChatsPage from 'pages/ChatPage';
+import ChessGamePage from 'pages/ChessGamePage';
 import GamesPage from 'pages/GamesPage';
 import NotFoundPage from 'pages/NotFoundPage';
 import RoomsPage from 'pages/RoomsPage';
@@ -27,6 +28,7 @@ const Router = () => {
 				)}
 				<Route path="/rooms" element={<RoomsPage />} />
 				<Route path="/rooms/:roomId" element={<GamesPage />} />
+				<Route path="/game/:gameGuid" element={<ChessGamePage />} />
 				<Route path="/profile" element={<UserProfilePage />} />
 				<Route path="/" element={<Navigate to="/rooms" />} />
 

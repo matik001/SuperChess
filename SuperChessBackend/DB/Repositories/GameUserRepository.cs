@@ -15,6 +15,7 @@ namespace SuperChessBackend.DB.Repositories
 
         public PlayerColors Color { get; set; }
         public string Nick { get; set; }
+        public string? GuestGuid { get; set; } /// In case player is guest, we store his guid
 
         [ForeignKey("User")]
         public int? UserId { get; set; }

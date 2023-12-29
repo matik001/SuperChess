@@ -21,7 +21,10 @@ services.AddAutoMapper(typeof(AutomapperProfile));
 services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 services.AddScoped<IAppUnitOfWork, AppUnitOfWork>();
 services.AddScoped<IAuthService, AuthService>();
-services.AddControllers().AddNewtonsoftJson();
+services.AddScoped<IChessService, ChessService>();
+services.AddControllers().AddNewtonsoftJson(options =>
+        options.SerializerSettings.Converters.Add(new Newtonsoft.Json.Converters.StringEnumConverter()));
+
 services.AddEndpointsApiExplorer();
 services.AddSwaggerGen();
 services.ConfigureJWT(builder.Configuration);

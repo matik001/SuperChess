@@ -34,13 +34,17 @@ namespace SuperChessBackend.Controllers.v1
         [AllowAnonymous]
         public IEnumerable<RoomExtendedDTO> Get()
         {
-            var rooms = uow.RoomRepository.GetAll().Select(room => new RoomExtendedDTO()
-            {
-                Id = room.Id,
-                CreationDate = room.CreationDate,
-                RoomName = room.RoomName,
-                AmountOfUsers = room.Games.Count() /// EF is smart and it should be performent
-            }).ToList();
+            var rooms = uow.RoomRepository.GetAll()
+                .Select(room => new RoomExtendedDTO()
+                {
+                    Id = room.Id,
+                    CreationDate = room.CreationDate,
+                    RoomName = room.RoomName,
+                    AmountOfUsers = room.Games.Where(x => x.GameStatus == GameState.NotStarted 
+                                    || x.GameStatus == GameState.InProgress).Count() /// EF is smart and it should be performent
+                })
+                .OrderByDescending(room => room.CreationDate)
+                .ToList();
             return rooms;
         }
 
@@ -49,7 +53,7 @@ namespace SuperChessBackend.Controllers.v1
         [AllowAnonymous]
         public RoomExtendedDTO Get(int id)
         {
-            var room = uow.RoomRepository.GetAll().Where(a=>a.Id == id).Select(room => new RoomExtendedDTO()
+            var room = uow.RoomRepository.GetAll().Where(a => a.Id == id).Select(room => new RoomExtendedDTO()
             {
                 Id = room.Id,
                 CreationDate = room.CreationDate,

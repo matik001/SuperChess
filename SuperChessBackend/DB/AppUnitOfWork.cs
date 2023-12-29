@@ -9,7 +9,7 @@ namespace SuperChessBackend.DB
         IRoleRepository RoleRepository { get; }
         IUserRoleRepository UserRoleRepository { get; }
         IGameRepository GameRepository { get; }
-        IGameRepository UserGameRepository { get; }
+        IUserGameRepository UserGameRepository { get; }
         IRefreshTokenRepository RefreshTokenRepository { get; }
         IRevokedTokenRepository RevokedTokenRepository { get; }
         IRoomRepository RoomRepository { get; }
@@ -84,14 +84,14 @@ namespace SuperChessBackend.DB
             }
         }
 
-        private IGameRepository _userGameRepository;
-        public IGameRepository UserGameRepository
+        private IUserGameRepository _userGameRepository;
+        public IUserGameRepository UserGameRepository
         {
             get
             {
                 if (_userGameRepository == null)
                 {
-                    _userGameRepository = new GameRepository(_dbContext);
+                    _userGameRepository = new UserGameRepository(_dbContext);
                 }
                 return _userGameRepository;
             }

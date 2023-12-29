@@ -19,6 +19,7 @@ const Container = styled.div`
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+	transition: all 0.3s;
 	&:hover {
 		opacity: 1;
 	}

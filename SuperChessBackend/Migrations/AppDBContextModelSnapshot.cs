@@ -233,6 +233,9 @@ namespace SuperChessBackend.Migrations
                     b.Property<int>("GameId")
                         .HasColumnType("integer");
 
+                    b.Property<string>("GuestGuid")
+                        .HasColumnType("text");
+
                     b.Property<string>("Nick")
                         .IsRequired()
                         .HasColumnType("text");

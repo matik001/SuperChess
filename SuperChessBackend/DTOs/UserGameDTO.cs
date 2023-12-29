@@ -10,6 +10,8 @@ namespace SuperChessBackend.DTOs
         public int Id { get; set; }
         public PlayerColors Color { get; set; }
         public string Nick { get; set; }
+        public string? GuestGuid { get; set; } 
+
 
         public UserDTO? User { get; set; }
         public int GameId { get; set; }

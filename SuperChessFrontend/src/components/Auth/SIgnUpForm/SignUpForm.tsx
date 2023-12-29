@@ -94,7 +94,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({}) => {
 						isPassword
 						control={control}
 						name="ConfirmPassword"
-						style={{ marginBottom: '24px' }}
+						style={{ marginBottom: '32px' }}
 						rules={{
 							required: t('The field cannot be empty'),
 							minLength: {

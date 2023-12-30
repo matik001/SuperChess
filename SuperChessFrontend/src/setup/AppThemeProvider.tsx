@@ -52,7 +52,7 @@ declare module 'styled-components' {
 	export interface DefaultTheme extends AppTheme {}
 }
 const AppThemeProvider: React.FC<AppThemeProviderProps> = ({ children }) => {
-	const { isDarkMode } = useDarkMode();
+	const { isDarkMode } = useDarkMode(true);
 
 	const themeDark: AppTheme = {
 		primaryColor: '#c8923b',

@@ -15,7 +15,7 @@ namespace SuperChessBackend.DB.Repositories
         [Column("RevokedTokenId")]
         public int Id { get; set; }
         public string TokenGuid { get; set; }
-        public DateTime ExpirationDate { get; set; }
+        public DateTime ExpirationDate { get; set; } /// to know when to delete from db
 
         [ForeignKey("User")]
         public int UserId { get; set; }
@@ -24,6 +24,7 @@ namespace SuperChessBackend.DB.Repositories
     }
     public interface IRevokedTokenRepository : IGenericRepository<RevokedToken>
     {
+        public bool IsTokenRevoked(string tokenGuid);
     }
     public class RevokedTokenRepository : GenericRepository<RevokedToken>, IRevokedTokenRepository
     {
@@ -31,5 +32,9 @@ namespace SuperChessBackend.DB.Repositories
         {
         }
 
+        public bool IsTokenRevoked(string tokenGuid)
+        {
+            return GetAll().Any(t => t.TokenGuid == tokenGuid);
+        }
     }
 }

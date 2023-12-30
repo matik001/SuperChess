@@ -19,6 +19,14 @@ var services = builder.Services;
 // Add services to the container.
 services.AddAutoMapper(typeof(AutomapperProfile));
 services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+//AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+services.AddDbContext<AppDBContext>(options =>
+{
+    var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+    options.UseNpgsql(connectionString);
+});
+
 services.AddScoped<IAppUnitOfWork, AppUnitOfWork>();
 services.AddScoped<IAuthService, AuthService>();
 services.AddScoped<IChessService, ChessService>();
@@ -38,12 +46,7 @@ services.AddSignalR()
 ;
 services.AddScoped<IGamesHubService, GamesHubService>();
 
-//AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
-services.AddDbContext<AppDBContext>(options =>
-{
-    var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-    options.UseNpgsql(connectionString);
-});
+
 
 var app = builder.Build();
 

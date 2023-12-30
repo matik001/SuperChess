@@ -156,6 +156,7 @@ namespace SuperChessBackend.Services
                 /// todo sprawdzic czy sie usuwa z bazy
                 user.RevokedTokens.Remove(user.RevokedTokens.OrderBy(a => a.ExpirationDate).FirstOrDefault());
             }
+            await uow.UserRepository.Update(user);
             await uow.SaveChangesAsync();
         }
         private ClaimsPrincipal? _getPrincipalFromExpiredToken(string? token)

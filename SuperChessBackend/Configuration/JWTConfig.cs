@@ -48,16 +48,18 @@ namespace SuperChessBackend.Configuration
                         ClockSkew = TimeSpan.Zero,
                         IssuerSigningKey = new SymmetricSecurityKey(
                              Encoding.UTF8.GetBytes(Key)),
-                        LifetimeValidator = (before, expires, token, param) =>
-                        {
-                            if(expires < DateTime.UtcNow)
-                                return false;
-                            var uow = builtServiceProvider.GetRequiredService<IAppUnitOfWork>();
-                            var isRevoked = uow.RevokedTokenRepository.IsTokenRevoked(token.Id);
-                            if(isRevoked)
-                                return false;
-                            return true;
-                        }
+
+                        /// czasami powoduje problemy z asynchronciznoscia wiec komentuje
+                        //LifetimeValidator = (before, expires, token, param) =>
+                        //{
+                        //    if(expires < DateTime.UtcNow)
+                        //        return false;
+                        //    var uow = builtServiceProvider.GetRequiredService<IAppUnitOfWork>();
+                        //    var isRevoked = uow.RevokedTokenRepository.IsTokenRevoked(token.Id);
+                        //    if(isRevoked)
+                        //        return false;
+                        //    return true;
+                        //}
                     };
 
                     /// auth for signalr

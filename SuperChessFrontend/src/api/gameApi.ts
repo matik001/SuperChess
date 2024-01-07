@@ -35,7 +35,13 @@ export interface GameDTO {
 	roomId: number;
 	userGames: UserGameDTO[];
 }
-export const QUERYKEY_GETGAMES = 'QUERYKEY_GETGAMES';
+
+export const gameKeys = {
+	prefix: ['game'] as const,
+	list: () => [...gameKeys.prefix, 'list'] as const,
+	one: (id: number) => [...gameKeys.prefix, 'one', id] as const
+};
+
 export const getGames = async (signal?: AbortSignal) => {
 	const res = await appAxios.get<GameDTO[]>('/v1/Game', {
 		signal: signal

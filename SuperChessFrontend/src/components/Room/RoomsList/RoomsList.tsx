@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { FloatButton } from 'antd';
-import { QUERYKEY_GETROOMS, createRoom, getRooms } from 'api/roomApi';
+import { createRoom, getRooms, roomKeys } from 'api/roomApi';
 import { ScrollableMixin } from 'components/UI/Scrollable/Scrollable';
 import Spinner from 'components/UI/Spinners/Spinner';
 import React from 'react';
@@ -32,7 +32,7 @@ const RoomsList: React.FC<RoomsListProps> = ({}) => {
 		isFetching,
 		refetch
 	} = useQuery({
-		queryKey: [QUERYKEY_GETROOMS],
+		queryKey: roomKeys.list(),
 		queryFn: ({ signal }) => {
 			return getRooms(signal);
 		}
@@ -49,7 +49,7 @@ const RoomsList: React.FC<RoomsListProps> = ({}) => {
 		},
 		onSuccess: (newRoom) => {
 			queryClient.invalidateQueries({
-				queryKey: [QUERYKEY_GETROOMS]
+				queryKey: roomKeys.prefix
 			});
 		}
 	});

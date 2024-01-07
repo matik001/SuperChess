@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { Card } from 'antd';
-import { QUERYKEY_GETGAMES, getGames } from 'api/gameApi';
+import { gameKeys, getGames } from 'api/gameApi';
 import { ScrollableMixin } from 'components/UI/Scrollable/Scrollable';
 import Spinner from 'components/UI/Spinners/Spinner';
 import { t } from 'i18next';
@@ -23,7 +23,7 @@ const Container = styled.div`
 const GamesHistoryCart: React.FC<GamesHistoryCartProps> = ({}) => {
 	const user = useUserStore((a) => a.user);
 	const gamesQuery = useQuery({
-		queryKey: [QUERYKEY_GETGAMES],
+		queryKey: gameKeys.list(),
 		queryFn: async ({ signal }) => {
 			return await getGames(signal);
 		},

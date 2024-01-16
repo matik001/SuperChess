@@ -60,14 +60,25 @@ namespace SuperChessBackend.DB
             ///// relations
             /////
 
+
             builder.Entity<User>()
-                .HasMany(e => e.Roles)
-                .WithMany(e => e.Users)
-                //.UsingEntity<UserRole>(
-                //    l => l.HasOne<Role>().WithMany(e => e.UserRoles).HasForeignKey(e => e.RoleId),
-                //    r => r.HasOne<User>().WithMany(e => e.UserRoles).HasForeignKey(e => e.UserId)
-                //)
-                ;
+              .HasMany(u => u.Roles)
+              .WithMany(r => r.Users)
+              .UsingEntity<UserRole>(
+                  j => j
+                      .HasOne(ur => ur.Role)
+                      .WithMany(r => r.UserRoles)
+                      .HasForeignKey(ur => ur.RoleId),
+                  j => j
+                      .HasOne(ur => ur.User)
+                      .WithMany(u => u.UserRoles)
+                      .HasForeignKey(ur => ur.UserId),
+                  j =>
+                  {
+                      j.ToTable("userrole");
+                  });
+
+
             builder.Entity<User>()
               .HasMany(e => e.Games)
               .WithMany(e => e.Users)

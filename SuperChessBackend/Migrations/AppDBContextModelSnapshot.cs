@@ -37,21 +37,6 @@ namespace SuperChessBackend.Migrations
                     b.ToTable("GameUser");
                 });
 
-            modelBuilder.Entity("RoleUser", b =>
-                {
-                    b.Property<int>("RolesId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("UsersId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("RolesId", "UsersId");
-
-                    b.HasIndex("UsersId");
-
-                    b.ToTable("RoleUser");
-                });
-
             modelBuilder.Entity("SuperChessBackend.DB.Repositories.Game", b =>
                 {
                     b.Property<int>("Id")
@@ -299,7 +284,7 @@ namespace SuperChessBackend.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("userrole");
+                    b.ToTable("userrole", (string)null);
                 });
 
             modelBuilder.Entity("GameUser", b =>
@@ -307,21 +292,6 @@ namespace SuperChessBackend.Migrations
                     b.HasOne("SuperChessBackend.DB.Repositories.Game", null)
                         .WithMany()
                         .HasForeignKey("GamesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("SuperChessBackend.DB.Repositories.User", null)
-                        .WithMany()
-                        .HasForeignKey("UsersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("RoleUser", b =>
-                {
-                    b.HasOne("SuperChessBackend.DB.Repositories.Role", null)
-                        .WithMany()
-                        .HasForeignKey("RolesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

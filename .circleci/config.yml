@@ -96,12 +96,12 @@ jobs:
       # Deploy frontend
       - run:
           name: Upload frontend
-          command: rsync -e "ssh -o StrictHostKeyChecking=no" -arvc --delete ./dist/* $VPS_USER@$VPS_URL:~/static/chess_frontend
+          command: rsync -e "ssh -o StrictHostKeyChecking=no" -arvc --delete ./dist/ $VPS_USER@$VPS_URL:~/static/chess_frontend
 
       # Send backend
       - run:
           name: Upload backend
-          command: rsync -e "ssh -o StrictHostKeyChecking=no" -arvc --delete ./backend_build/* $VPS_USER@$VPS_URL:~/containers/chess_backend
+          command: rsync -e "ssh -o StrictHostKeyChecking=no" -arvc --delete ./backend_build/ $VPS_USER@$VPS_URL:~/containers/chess_backend
 
       # Start backend
       - run: > 

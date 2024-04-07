@@ -24,7 +24,7 @@ services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 services.AddDbContext<AppDBContext>(options =>
 {
     var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-    options.UseNpgsql(connectionString);
+    options.UseMySQL(connectionString);
 });
 
 services.AddScoped<IAppUnitOfWork, AppUnitOfWork>();

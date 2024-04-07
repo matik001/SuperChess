@@ -1,6 +1,6 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
+using MySql.EntityFrameworkCore.Metadata;
 
 #nullable disable
 
@@ -9,65 +9,71 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace SuperChessBackend.Migrations
 {
     /// <inheritdoc />
-    public partial class ResetedMigrations : Migration
+    public partial class FirstMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.AlterDatabase()
+                .Annotation("MySQL:Charset", "utf8mb4");
+
             migrationBuilder.CreateTable(
                 name: "role",
                 columns: table => new
                 {
-                    RoleId = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    RoleName = table.Column<string>(type: "text", nullable: false)
+                    RoleId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    RoleName = table.Column<string>(type: "longtext", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_role", x => x.RoleId);
-                });
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateTable(
                 name: "room",
                 columns: table => new
                 {
-                    RoomId = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    RoomName = table.Column<string>(type: "text", nullable: false),
-                    CreationDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    RoomId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    RoomName = table.Column<string>(type: "longtext", nullable: false),
+                    CreationDate = table.Column<DateTime>(type: "datetime(6)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_room", x => x.RoomId);
-                });
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateTable(
                 name: "user",
                 columns: table => new
                 {
-                    UserId = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    UserName = table.Column<string>(type: "text", nullable: false),
-                    UserEmail = table.Column<string>(type: "text", nullable: false),
-                    CreationDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    UserId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    UserName = table.Column<string>(type: "longtext", nullable: false),
+                    UserEmail = table.Column<string>(type: "longtext", nullable: false),
+                    CreationDate = table.Column<DateTime>(type: "datetime(6)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_user", x => x.UserId);
-                });
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateTable(
                 name: "game",
                 columns: table => new
                 {
-                    GameId = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    GameGuid = table.Column<Guid>(type: "uuid", nullable: false),
-                    CreationDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    GameStatus = table.Column<int>(type: "integer", nullable: false),
-                    GameType = table.Column<int>(type: "integer", nullable: false),
-                    GameData = table.Column<string>(type: "text", nullable: false),
-                    RoomId = table.Column<int>(type: "integer", nullable: true)
+                    GameId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    GameGuid = table.Column<Guid>(type: "char(36)", nullable: false),
+                    CreationDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    GameStatus = table.Column<int>(type: "int", nullable: false),
+                    GameType = table.Column<int>(type: "int", nullable: false),
+                    GameData = table.Column<string>(type: "longtext", nullable: false),
+                    RoomId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -77,42 +83,19 @@ namespace SuperChessBackend.Migrations
                         column: x => x.RoomId,
                         principalTable: "room",
                         principalColumn: "RoomId");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "RoleUser",
-                columns: table => new
-                {
-                    RolesId = table.Column<int>(type: "integer", nullable: false),
-                    UsersId = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_RoleUser", x => new { x.RolesId, x.UsersId });
-                    table.ForeignKey(
-                        name: "FK_RoleUser_role_RolesId",
-                        column: x => x.RolesId,
-                        principalTable: "role",
-                        principalColumn: "RoleId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_RoleUser_user_UsersId",
-                        column: x => x.UsersId,
-                        principalTable: "user",
-                        principalColumn: "UserId",
-                        onDelete: ReferentialAction.Cascade);
-                });
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateTable(
                 name: "refreshtoken",
                 columns: table => new
                 {
-                    RefreshTokenId = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Token = table.Column<string>(type: "text", nullable: false),
-                    CreationDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    ExpirationDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    UserId = table.Column<int>(type: "integer", nullable: false)
+                    RefreshTokenId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    Token = table.Column<string>(type: "longtext", nullable: false),
+                    CreationDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    ExpirationDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -123,17 +106,18 @@ namespace SuperChessBackend.Migrations
                         principalTable: "user",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
-                });
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateTable(
                 name: "revokedtokens",
                 columns: table => new
                 {
-                    RevokedTokenId = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    TokenGuid = table.Column<string>(type: "text", nullable: false),
-                    ExpirationDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    UserId = table.Column<int>(type: "integer", nullable: false)
+                    RevokedTokenId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    TokenGuid = table.Column<string>(type: "longtext", nullable: false),
+                    ExpirationDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -144,17 +128,18 @@ namespace SuperChessBackend.Migrations
                         principalTable: "user",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
-                });
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateTable(
                 name: "userpassword",
                 columns: table => new
                 {
-                    PasswordId = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    PasswordHash = table.Column<string>(type: "text", nullable: false),
-                    PasswordDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    PasswordUserId = table.Column<int>(type: "integer", nullable: false)
+                    PasswordId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    PasswordHash = table.Column<string>(type: "longtext", nullable: false),
+                    PasswordDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    PasswordUserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -165,16 +150,17 @@ namespace SuperChessBackend.Migrations
                         principalTable: "user",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
-                });
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateTable(
                 name: "userrole",
                 columns: table => new
                 {
-                    UserRoleId = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    UserId = table.Column<int>(type: "integer", nullable: false),
-                    RoleId = table.Column<int>(type: "integer", nullable: false)
+                    UserRoleId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    RoleId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -191,14 +177,15 @@ namespace SuperChessBackend.Migrations
                         principalTable: "user",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
-                });
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateTable(
                 name: "GameUser",
                 columns: table => new
                 {
-                    GamesId = table.Column<int>(type: "integer", nullable: false),
-                    UsersId = table.Column<int>(type: "integer", nullable: false)
+                    GamesId = table.Column<int>(type: "int", nullable: false),
+                    UsersId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -215,18 +202,20 @@ namespace SuperChessBackend.Migrations
                         principalTable: "user",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
-                });
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateTable(
                 name: "gameuser",
                 columns: table => new
                 {
-                    UserGameId = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Color = table.Column<int>(type: "integer", nullable: false),
-                    Nick = table.Column<string>(type: "text", nullable: false),
-                    UserId = table.Column<int>(type: "integer", nullable: true),
-                    GameId = table.Column<int>(type: "integer", nullable: false)
+                    UserGameId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    Color = table.Column<int>(type: "int", nullable: false),
+                    Nick = table.Column<string>(type: "longtext", nullable: false),
+                    GuestGuid = table.Column<string>(type: "longtext", nullable: true),
+                    UserId = table.Column<int>(type: "int", nullable: true),
+                    GameId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -242,7 +231,8 @@ namespace SuperChessBackend.Migrations
                         column: x => x.UserId,
                         principalTable: "user",
                         principalColumn: "UserId");
-                });
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.InsertData(
                 table: "role",
@@ -256,11 +246,6 @@ namespace SuperChessBackend.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_GameUser_UsersId",
                 table: "GameUser",
-                column: "UsersId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_RoleUser_UsersId",
-                table: "RoleUser",
                 column: "UsersId");
 
             migrationBuilder.CreateIndex(
@@ -309,9 +294,6 @@ namespace SuperChessBackend.Migrations
         {
             migrationBuilder.DropTable(
                 name: "GameUser");
-
-            migrationBuilder.DropTable(
-                name: "RoleUser");
 
             migrationBuilder.DropTable(
                 name: "gameuser");
